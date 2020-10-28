@@ -1,5 +1,9 @@
 <template>
-    $END$
+    <div id="data-view">
+        <dv-full-screen-container>
+            <router-view></router-view>
+        </dv-full-screen-container>
+    </div>
 </template>
 
 <script>
@@ -8,6 +12,19 @@
     }
 </script>
 
-<style scoped>
+<style  lang="scss">
+#data-view {
+        width: 100%;
+        height: 100%;
+        background-color: #030409;
+        color: #fff;
+
+    #dv-full-screen-container {
+        background: linear-gradient(#122C77,#061029);
+        display: flex;
+        flex-direction: column;
+    }
+
+}
 
 </style>
