@@ -77,7 +77,7 @@
         flex-wrap: wrap;
         box-sizing: border-box;
         position: relative;
-        padding: 60px 20px 0;
+        padding: 80px 20px 0;
         .chart-page-left{
             width: 50%;
         }
@@ -91,7 +91,7 @@
             width: 100%;
         }
         .chart-item-2{
-            height: 52%;
+            height: 50%;
             display: flex;
             width: 100%;
 
@@ -103,7 +103,7 @@
             box-sizing: border-box;
         }
         .chart-item-4{
-            height: 52%;
+            height: 50%;
             display: flex;
             width: 100%;
 

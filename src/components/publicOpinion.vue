@@ -46,133 +46,7 @@
             this.getInfo()
             this.get24Info()
             this.getWordCloud()
-            const container2 = document.getElementById('unmanned2')
-            const myChart2 = new Charts(container2)
-            const option2= {
-                title: {
-                    text: '近24小时接入客服数量统计',
-                    style: {
-                        fill: '#9BADF9',
-                        fontSize: 16,
-                        textAlign: 'center',
-                        textBaseline: 'bottom'
-                    }
-                },
-                legend: {
-                    data: [
-                        {
-                            name:'自动回复数量',
-                            color: '#aeeff0',
-                        }, {
-                            name:'人工回复数量',
-                            color: '#f1829f',
-                        }
-                    ],
-                    textStyle: {
-                        fontFamily: 'Arial',
-                        fontSize: 13,
-                        fill: '#9BADF9'
-                    }
-                },
-                xAxis: {
-                    name: '(小时)',
-                    data: [0,2,4,6,8,10,12,14,16,18,20,22,24],
-                    nameTextStyle:{
-                        fill: '#9BADF9',
-                        fontSize: 16
-                    },
-                    axisLine:{
-                        style:{
-                            stroke: '#979797',
-                            lineWidth: 1
-                        }
-                    },
-                    axisLabel: {
-                        style: {
-                            fill:'#9BADF9',
-                            fontSize: 14
-                        }
-                    },
 
-                    axisTick:{
-                        style:{
-                            stroke: '#979797',
-                            lineWidth: 1
-                        }
-                    }
-                },
-                yAxis: {
-                    name: '(个)',
-                    data: 'value',
-                    nameTextStyle:{
-                        fill: '#9BADF9',
-                        fontSize: 14
-                    },
-                    splitLine:{
-                        style:{
-                            stroke: 'rgba(151, 151, 151, 1)',
-                            lineWidth: 1,
-                            lineDash: [8, 4]
-                        }
-                    },
-                    axisLine:{
-                        style:{
-                            stroke: '#979797',
-                            lineWidth: 1
-                        }
-                    },
-                    axisTick:{
-                        style:{
-                            stroke: '#979797',
-                            lineWidth: 1
-                        }
-                    },
-                    axisLabel: {
-                        style: {
-                            fill:'#9BADF9',
-                            fontSize: 14,
-                        }
-                    }
-                },
-                series: [
-                    {
-                        data: [40,21,41,61,81,40,122,114,126,148,120,52,74],
-                        name: '自动回复数量',
-                        type: 'line',
-                        smooth: true,
-                        lineArea: {
-                            show: true,
-                            gradient: ['rgba(55, 162, 218, 0.6)', 'rgba(55, 162, 218, 0)'],
-
-                        },
-                        lineStyle: {
-                            // lineDash: [3, 3],
-                            lineWidth: 2
-                        },
-                    },
-                    {
-                        data: [61,81,50,122,114,126,148,120,52,74,30,21,41],
-                        name: '人工回复数量',
-                        type: 'line',
-                        smooth: true,
-                        lineArea: {
-                            show: true,
-                            gradient: ['rgba(223, 24, 127, .6)', 'rgba(223, 24, 127, .1)']
-                        },
-                        lineStyle: {
-                            stroke: 'rgba(251, 114, 147, 1)',
-                            // lineDash: [3, 3],
-                            lineWidth: 2
-                        },
-                        linePoint: {
-                            style: {
-                                stroke: 'rgba(251, 114, 147, 1)'
-                            }
-                        }
-                    }
-                ]
-            }
-            myChart2.setOption(option2)
             console.log('Js2WordCloud',Js2WordCloud)
 
         },
@@ -287,7 +161,157 @@
 
                 )
                     .then((response)=> {
-                        console.log(response)
+                        let arr = response.data.aggregations.group_by_tags.buckets
+                        let frontArr = new Array(20).fill(1) // 正面数据
+                        let negativeArr = new Array(20).fill(1) // 负面数据
+
+                        arr.forEach((item)=>{
+                            // 筛选满足条件的数据
+                            let str1 = item.key.split(' ')[0]
+
+                            let str2 = item.key.split(' ')[1]
+                            let time = parseInt(str2.slice(0,2))
+                            let type = parseInt(str2.slice(-2))
+                            if(str1==='2020-10-25'){
+                                console.log(time,type)
+                                if(type){
+                                    frontArr[time] = item.doc_count*4
+                                }else{
+                                    negativeArr[time] = item.doc_count*4
+                                }
+                            }
+                        })
+                        console.log(frontArr,negativeArr)
+                        console.log('24小时 舆情统计',)
+                        const container2 = document.getElementById('unmanned2')
+                        const myChart2 = new Charts(container2)
+                        const option2= {
+                            title: {
+                                text: '近24小时舆情数量统计',
+                                style: {
+                                    fill: '#9BADF9',
+                                    fontSize: 16,
+                                    textAlign: 'center',
+                                    textBaseline: 'bottom'
+                                }
+                            },
+                            legend: {
+                                data: [
+                                    {
+                                        name:'正面舆情数量',
+                                        color: '#aeeff0',
+                                    }, {
+                                        name:'负面舆情数量',
+                                        color: '#f1829f',
+                                    }
+                                ],
+                                textStyle: {
+                                    fontFamily: 'Arial',
+                                    fontSize: 13,
+                                    fill: '#9BADF9'
+                                }
+                            },
+                            xAxis: {
+                                name: '(小时)',
+                                data: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
+                                nameTextStyle:{
+                                    fill: '#9BADF9',
+                                    fontSize: 16
+                                },
+                                axisLine:{
+                                    style:{
+                                        stroke: '#979797',
+                                        lineWidth: 1
+                                    }
+                                },
+                                axisLabel: {
+                                    style: {
+                                        fill:'#9BADF9',
+                                        fontSize: 14
+                                    }
+                                },
+
+                                axisTick:{
+                                    style:{
+                                        stroke: '#979797',
+                                        lineWidth: 1
+                                    }
+                                }
+                            },
+                            yAxis: {
+                                name: '(个)',
+                                data: 'value',
+                                nameTextStyle:{
+                                    fill: '#9BADF9',
+                                    fontSize: 14
+                                },
+                                splitLine:{
+                                    style:{
+                                        stroke: 'rgba(151, 151, 151, 1)',
+                                        lineWidth: 1,
+                                        lineDash: [8, 4]
+                                    }
+                                },
+                                axisLine:{
+                                    style:{
+                                        stroke: '#979797',
+                                        lineWidth: 1
+                                    }
+                                },
+                                axisTick:{
+                                    style:{
+                                        stroke: '#979797',
+                                        lineWidth: 1
+                                    }
+                                },
+                                axisLabel: {
+                                    style: {
+                                        fill:'#9BADF9',
+                                        fontSize: 14,
+                                    }
+                                }
+                            },
+                            series: [
+                                {
+                                    data: frontArr,
+                                    name: '正面舆情数量',
+                                    type: 'line',
+                                    smooth: true,
+                                    lineArea: {
+                                        show: true,
+                                        gradient: ['rgba(55, 162, 218, 0.6)', 'rgba(55, 162, 218, 0)'],
+
+                                    },
+                                    lineStyle: {
+                                        // lineDash: [3, 3],
+                                        lineWidth: 2
+                                    },
+                                },
+                                {
+                                    data: negativeArr,
+                                    name: '负面舆情数量',
+                                    type: 'line',
+                                    smooth: true,
+                                    lineArea: {
+                                        show: true,
+                                        gradient: ['rgba(223, 24, 127, .6)', 'rgba(223, 24, 127, .1)']
+                                    },
+                                    lineStyle: {
+                                        stroke: 'rgba(251, 114, 147, 1)',
+                                        // lineDash: [3, 3],
+                                        lineWidth: 2
+                                    },
+                                    linePoint: {
+                                        style: {
+                                            stroke: 'rgba(251, 114, 147, 1)'
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                        myChart2.setOption(option2)
+
+
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -296,6 +320,7 @@
                         // always executed
                     });
             },
+
             getInfo(){
                 this.$axios.post(GET_WEIBO_INFO,{
                         "query": {
