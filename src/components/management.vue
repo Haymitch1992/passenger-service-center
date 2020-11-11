@@ -2,7 +2,7 @@
     <div class="equipment">
         <div class="equipment-left">
             <p>设备故障状态</p>
-            <dv-decoration-9 dur="6" class="malfunction">66%</dv-decoration-9>
+            <dv-decoration-9 :dur="6" class="malfunction">66%</dv-decoration-9>
 
 <!--            <div id="gauge"  class="ring-charts"></div>-->
             <ul class="equipment-ul">
@@ -154,7 +154,7 @@
             }
         },
         mounted() {
-            this.drawChart()
+            // this.drawChart()
         }
     }
 </script>
