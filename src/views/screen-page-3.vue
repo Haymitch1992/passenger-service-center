@@ -190,24 +190,23 @@
             margin: 0;
             list-style: none;
             padding-top: 20px;
-            height: 1149px;
+            height: 75vh;
             li{
                 width: 50%;
                 box-sizing: border-box;
                 padding: 10px 50px 26px 10px;
                 float: left;
-                height: 560px;
+                height:37vh;
             }
         }
         .video-box{
             background: #ddd;
             width: 100%;
-            height: 100%;
-
+            height: 32vh;
         }
         .video{
             padding: 24px 20px 24px 20px;
-            height: 100%;
+            height: 30vh;
             box-sizing: border-box;
             position: relative;
             overflow: hidden;
@@ -233,21 +232,23 @@
         width: 30%;
         float: left;
         .monitoring{
-            padding: 90px 30px 30px;
+            padding: 4.1rem 1.6rem .6rem;
         }
         .monitoring-item{
-            height: 210px;
+            height: 14vh;
             width: 100%;
             margin-bottom: 28px;
         }
         .monitoring-left{
             float: left;
             width: 40%;
+            height: 12vh;
             .monitoring-img{
-                width: 200px;
-                height: 140px;
+                width: 80%;
+                margin: 2vh auto;
+                height: 10vh;
                 background: #ddd;
-                margin-top: 34px;
+                display: block;
             }
         }
         .monitoring-right{
@@ -255,10 +256,12 @@
             width: 60%;
             text-align: left;
             padding-top: 20px;
+            height: 12vh;
             p{
                 color: #9BADF9;
+                margin: .4rem 0;
                 .margin-left-text{
-                    margin-left: 80px;
+                    margin-left: 4rem;
                 }
             }
         }

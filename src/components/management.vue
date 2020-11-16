@@ -206,7 +206,6 @@
                 vertical-align: middle;
                 font-size: .8rem;
             }
-
         }
         .equipment-list-tr:last-child{
             margin-bottom: 0;
