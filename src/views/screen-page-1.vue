@@ -77,7 +77,7 @@
         flex-wrap: wrap;
         box-sizing: border-box;
         position: relative;
-        padding: 80px 20px 0;
+        padding: 8vh 20px 0;
         .chart-page-left{
             width: 50%;
         }
@@ -86,28 +86,29 @@
         }
 
         .chart-item-1{
-            height: 48%;
+            height: 45vh;
             display: flex;
             width: 100%;
+            overflow: hidden;
         }
         .chart-item-2{
-            height: 50%;
+            height: 45vh;
             display: flex;
             width: 100%;
-
+            overflow: hidden;
         }
         .chart-item-3{
-            height: 48%;
+            height: 45vh;
             display: flex;
             width: 100%;
             box-sizing: border-box;
+            overflow: hidden;
         }
         .chart-item-4{
-            height: 50%;
+            height: 45vh;
             display: flex;
             width: 100%;
-
-
+            overflow: hidden;
         }
     }
 

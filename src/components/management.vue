@@ -162,48 +162,49 @@
 <style scoped lang="scss">
     .equipment{
         display: flex;
-        padding: 80px 30px 0;
+        padding: 4.2rem 30px 0;
     }
     .equipment-left{
         width: 24%;
         p{
             color: #9BADF9;
-            font-size: 22px;
+            font-size: 1rem;
             margin: 0;
-            padding-bottom: 10px;
+            padding-bottom: .6rem;
+            margin: 0;
         }
         .ring-charts{
             width: 100%;
-            height: 240px;
+            height: 1vh;
             margin-bottom: 10px;
         }
         .malfunction{
-            width:220px;
-            height:220px;
-            margin: 40px auto 50px;
+            width:15vh;
+            height:15vh;
+            margin: 1rem auto;
             color: #32C5FF;
-            font-size: 32px;
+            font-size: 2rem;
             font-weight: bold;
         }
     }
     .equipment-right{
         width: 76%;
-
         .equipment-list-th{
             background: rgba(8, 164, 251, 1);
             margin: 0;
             padding: 10px 0;
             span{
                 color: rgba(14, 34, 90, 1);
+                font-size: .8rem;
             }
         }
         .equipment-list-tr{
             background: rgba(16, 37, 99, 1);
-            margin-bottom: 15px;
-            padding: 24px 0;
-            padding: 24px 0;
+            margin-bottom: .7rem;
+            padding: 1.3rem 0;
             span{
                 vertical-align: middle;
+                font-size: .8rem;
             }
 
         }
@@ -213,10 +214,13 @@
         .equipment-list{
             list-style: none;
             margin: 0;
-            padding: 0 24px 0 20px;
+            padding: 0 1rem 0 1rem;
             span{
                 display: inline-block;
                 width:15%;
+            }
+            span:nth-child(4){
+                width:20%;
             }
             span:first-child{
                 width: 20%;
@@ -230,19 +234,19 @@
         li{
             float: left;
             width: 50%;
-            padding-bottom: 20px;
+            padding-bottom: 1rem;
             p{
                 padding: 0;
                 margin: 0;
             }
             .title{
                 color: #9BADF9;
-                font-size: 20px;
+                font-size: 1rem;
                 padding: 6px 0;
             }
             .number{
                 color: #32C5FF;
-                font-size: 26px;
+                font-size: 1.2rem;
                 font-weight: bold;
                 padding-top: 10px;
             }

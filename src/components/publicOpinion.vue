@@ -27,22 +27,15 @@
                                 <div id="friendsWordCloud" class="friends-word-cloud"></div>
                                 <p>与地铁相关词云</p>
                             </div>
-
-
                         </div>
                         <!-- 轮播第二屏 -->
                         <div class="swiper-slide">
-                                <div class="analyse-box" style="height: 300px!important;">
-                                    <div id="analyse" class="analyse" ></div>
-                                </div>
-
-                                <!-- 图表 -->
-<!--                                <div id="analyse" class="analyse" ></div>-->
-                                <!-- 地图组件 -->
-<!--                                <dv-flyline-chart :config="config" :dev="true" style="width:413px;height:141px;" />-->
+                            <div class="analyse-box" >
+                                <div id="analyse" class="analyse" ></div>
+                            </div>
                         </div>
                         <div class="swiper-slide">
-                            <div id="mapContainer" style="width: 100%;height:500px;"></div>
+                            <div id="mapContainer" ></div>
                         </div>
 
                     </div>
@@ -180,10 +173,9 @@
                             text: '地铁城市舆情数据',
                             textStyle: {
                                 color: '#9BADF9',
-                                fontSize: 16,
+                                fontSize: 14,
                             },
-                            left:300,
-                            top:20
+                            top:10
                         },
                         tooltip: {
                             trigger: 'item',
@@ -197,8 +189,7 @@
                         visualMap: {
                             min: 0,
                             max: 200,
-                            bottom: 50,
-                            left:40,
+                            bottom: 40,
                             splitNumber: 5,
                             inRange: {
                                 color: ['#255B78', '#2A7484', '#2F9696', '#3BBCB0', '#51D4EB']
@@ -216,7 +207,7 @@
                             },
                             zoom: 1,
                             top: 50,
-                            left:140,
+                            left: 120,
                             itemStyle: {
                                 normal: {
                                     color: '#3c4247',
@@ -332,7 +323,7 @@
                             text: '近7天舆情数据分布趋势',
                             style: {
                                 fill: '#9BADF9',
-                                fontSize: 16,
+                                fontSize: 14,
                                 textAlign: 'center',
                                 textBaseline: 'bottom'
                             }
@@ -342,12 +333,12 @@
                             data: keyArr,
                             nameTextStyle:{
                                 fill: '#9BADF9',
-                                fontSize: 16
+                                fontSize: 14
                             },
                             axisLabel: {
                                 style: {
                                     fill:'#9BADF9',
-                                    fontSize: 16
+                                    fontSize: 12
                                 }
                             },
                             axisLine:{
@@ -362,7 +353,7 @@
                             data: 'value',
                             nameTextStyle:{
                                 fill: '#9BADF9',
-                                fontSize: 16
+                                fontSize: 14
                             },
                             splitLine:{
                                 style:{
@@ -380,7 +371,7 @@
                             axisLabel: {
                                 style: {
                                     fill:'#9BADF9',
-                                    fontSize: 16
+                                    fontSize: 14
                                 }
                             }
                         },
@@ -467,8 +458,8 @@
                         list: this.wordCloudList, // 词云数据源2
                         gridSize: 11,
                         fontSizeFactor: 0.2,
-                        maxFontSize: 32, //最大字号
-                        minFontSize: 17, //最小字号
+                        maxFontSize: 26, //最大字号
+                        minFontSize: 14, //最小字号
                         rotationSteps: 30,
                         rotateRatio: 0, // 旋转概率
                         ellipticity: 4,
@@ -558,7 +549,7 @@
                                 text: '近24小时舆情数量统计',
                                 style: {
                                     fill: '#9BADF9',
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     textAlign: 'center',
                                     textBaseline: 'bottom'
                                 }
@@ -584,7 +575,7 @@
                                 data: timeArr,
                                 nameTextStyle:{
                                     fill: '#9BADF9',
-                                    fontSize: 16
+                                    fontSize: 14
                                 },
                                 axisLine:{
                                     style:{
@@ -724,7 +715,7 @@
                         this.publicList = []
                         response.data.hits.hits.slice(0,5).forEach((item)=>{
                             this.publicList.push({
-                                text: item._source.text.slice(0,18) + '...',
+                                text: item._source.text.slice(0,12) + '...',
                                 status: item._source.weight>20?1:2,
                                 time: item._source.create_date,
                                 source: item._source.source
@@ -746,24 +737,30 @@
     @import "../../node_modules/swiper/swiper";
     .analyse-box{
         width: 100%;
-        height: 350px;
+        height: 22vh;
     }
     .map-box{
         width: 100%;
-        height: 190px;
+        height: 8vh;
     }
     #analyse{
-        width: 100% !important;
-        height: 100% !important;
+        width: 100%;
+        height: 30vh;
         display: block;
         overflow: hidden;
     }
-    .swiper-slide{
-        width: 780px;
+    #mapContainer{
+        width: 100%;
+        height: 37vh;
     }
-
+    .swiper-slide{
+        width: 100%;
+    }
+    .swiper-container{
+        height: 37vh;
+    }
     .public-container{
-        padding-top: 80px;
+        padding-top: 4.2rem;
         ul{
             list-style: none;
             text-align: left;
@@ -771,26 +768,26 @@
             margin: 0;
         }
         .public-content{
-            padding: 40px 30px 0 50px;
+            padding: 1.8rem 1rem 0 2rem;
             color:rgba(255, 255, 255, 0.85);
             font-size: 12px;
             p{
-                margin: 16px 0;
+                margin: .5rem 0;
             }
             .public-title{
-                font-size: 14px;
+                font-size: .8rem;
             }
             li{
-                height: 80px;
+                height: 4rem;
                 position: relative;
             }
             li:after{
                 content: '';
                 display: block;
-                width: 380px;
+                width: 130%;
                 height: 4px;
                 background: url("../assets/line.png") no-repeat;
-                background-size: 380px;
+                background-size: 100%;
                 position: absolute;
                 left: -50px;
                 bottom: 4px;
@@ -800,8 +797,8 @@
                 color: #ccc;
             }
             .public-status{
-                width: 8px ;
-                height: 8px;
+                width: 6px ;
+                height: 6px;
                 border-radius: 50%;
                 display: inline-block;
                 position: absolute;
@@ -810,39 +807,45 @@
             }
             .s-1{
                 background: #DF2021;
-                border: 4px solid #711010;
+                border: .2rem solid #711010;
             }
             .s-2{
                 background: #EA9100;
-                border: 4px solid #7D4E00;
+                border: .2rem solid #7D4E00;
             }
             .s-3{
                 background: #DFDF02;
-                border: 4px solid #666601;
+                border: .2rem solid #666601;
             }
         }
         .public-tab{
             height: 30px;
             position: absolute;
             left: -13px;
+            width: 100%;
             li{
-                width: 120px;
-                height: 24px;
-                line-height: 24px;
+                width: 32%;
+                font-size: .8rem;
+                height: 1.4rem;
+                line-height: 1.4rem;
                 text-align: center;
+                font-size: .74rem;
                 background: #093C7F;
                 color: rgba(255, 255, 255, 0.85);
                 transform: skewX(-45deg);
                 float: left;
-                margin-right: 6px;
                 cursor: pointer;
+                margin-right: 1%;
                 span{
                     display: inline-block;
                     transform: skewX(45deg);
                 }
             }
+            li:last-child{
+                margin-right: 0;
+            }
             li:first-child{
-                width: 130px;
+                width: 34%;
             }
             .active{
                 background: #32C5FF;
@@ -853,13 +856,12 @@
 
 
     .public-left{
-        width: 382px;
+        width: 30%;
         float: left;
         background: linear-gradient(#102563,#102563);
-        height: 540px;
         margin-left: 60px;
-        overflow: hidden;
         position: relative;
+        overflow: hidden;
     }
     .public-right{
         width: 63%;
@@ -868,18 +870,19 @@
         padding: 0 20px;
         #unmanned2{
             width: 100%;
-            height: 100%;
+            height: 22vh;
         }
         .friends-word-cloud{
-            margin: 0px 0 20px;
+            margin: 0px 0 .8rem;
             width: 100%;
-            height: 130px;
+            height: 10vh;
         }
         p{
             color:#9BADF9;
             text-align: center;
             font-weight: bold;
-            font-size: 16px;
+            font-size: .9rem;
+            margin: .4rem 0;
         }
     }
 

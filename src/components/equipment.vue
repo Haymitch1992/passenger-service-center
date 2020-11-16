@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <div id="equipment-container" class="equipment-container"></div>
-    </div>
+    <div id="equipment-container" class="equipment-container"></div>
 </template>
 
 <script>
@@ -98,7 +96,7 @@
 <style scoped>
     .equipment-container{
         width: 100%;
-        height: 470px;
-        padding-top: 100px;
+        padding-top: 3.5rem;
+        height: calc(100% - 7rem);
     }
 </style>

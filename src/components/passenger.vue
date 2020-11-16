@@ -19,7 +19,7 @@
                     <p>人工回复数量</p>
                     <p class="number">3</p>
                 </li>
-                <li style="float:left;width: 170px;">
+                <li class="current-item">
                     <p>当日接入总数量</p>
                     <p class="number">60</p>
                 </li>
@@ -114,7 +114,7 @@
                     text: '近24小时接入客服数量统计',
                     style: {
                         fill: '#9BADF9',
-                        fontSize: 16,
+                        fontSize: 14,
                         textAlign: 'center',
                         textBaseline: 'bottom'
                     }
@@ -140,7 +140,7 @@
                     data: [0,2,4,6,8,10,12,14,16,18,20,22,24],
                     nameTextStyle:{
                         fill: '#9BADF9',
-                        fontSize: 16
+                        fontSize: 14
                     },
                     axisLine:{
                         style:{
@@ -167,7 +167,7 @@
                     data: 'value',
                     nameTextStyle:{
                         fill: '#9BADF9',
-                        fontSize: 14
+                        fontSize: 12
                     },
                     splitLine:{
                         style:{
@@ -241,19 +241,18 @@
 <style scoped lang="scss">
     .border-box-content{
         display: flex;
-        padding: 80px 30px 0;
+        padding: 4rem 30px 0;
         #unmanned{
             width: 100%;
-            height: 400px;
+            height: 22vh;
         }
         .unmanned-left{
             width: 60%;
             .efficiency{
                 display: flex;
                 list-style: none;
-                padding: 0 0 0 40px;
+                padding: 0 0 0 2rem;
                 margin: 0;
-
                 li{
                     width: 100%;
                     p{
@@ -271,9 +270,9 @@
                     }
                     .number{
                         color: #32C5FF;
-                        font-size: 26px;
+                        font-size: 1.4rem;
                         float: left;
-                        padding-left: 20px;
+                        padding-left: 1rem;
                     }
                 }
             }
@@ -283,6 +282,7 @@
                 font-size: 16px;
                 height: 60px;
                 padding-left: 25px;
+                margin: .2rem 0 .4rem 0;
                 li{
                     padding: 4px 0;
                 }
@@ -295,9 +295,11 @@
                     width: 20%;
                     float: left;
                 }
-
+                .current-item:last-child{
+                    width: 25%;
+                }
                 .current-title{
-                    width: 50px;
+                    width: 3rem;
                     color: #32C5FF;
                     font-size: 14px;
                     box-sizing: border-box;
@@ -322,37 +324,38 @@
                 padding: 0;
             }
             .unmanned-title{
-                font-size: 28px;
-                margin-bottom: 30px;
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
             }
             .progress-out{
                 width: 80%;
-                height: 30px;
+                height: 1.4rem;
                 border-radius: 20px;
                 background: #102563;
                 box-sizing: border-box;
                 position: relative;
                 overflow: hidden;
-                margin-bottom: 22px;
+                margin-bottom: .9rem;
                 .number{
                     position: absolute;
                     right: 10px;
-                    line-height: 30px;
+                    line-height: 1.4rem;
                     top: 0;
                     z-index: 2;
+                    font-size: .6rem;
                 }
                 .progress-text{
                     padding: 0 10px;
                     color: #ffffff;
                     position: relative;
                     z-index: 2;
-                    font-size: 14px;
-                    line-height: 30px;
+                    font-size: .6rem;
+                    line-height: 1.4rem;
                 }
             }
             .progress-inner{
                 width: 0%;
-                height: 28px;
+                height: 1.4rem;
                 background: linear-gradient(to right ,#2760E4, #32C5FF);
                 z-index: 1;
                 position: absolute;
