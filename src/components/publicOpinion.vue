@@ -28,27 +28,40 @@
     </div>
     <div class="public-right">
       <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <!-- 轮播第一屏 -->
-          <div class="swiper-slide">
+        <swiper :options="swiperOption" ref="mySwiper">
+          <!-- slides -->
+          <swiper-slide>
             <div class="analyse-box">
               <div id="unmanned2"></div>
             </div>
             <div class="map-box">
+              <p>地铁热词</p>
               <div id="friendsWordCloud" class="friends-word-cloud"></div>
-              <p>与地铁相关词云</p>
             </div>
-          </div>
-          <!-- 轮播第二屏 -->
-          <div class="swiper-slide">
+          </swiper-slide>
+          <swiper-slide>
+            <div id="mapContainer"></div>
+          </swiper-slide>
+          <swiper-slide>
             <div class="analyse-box">
               <div id="analyse" class="analyse"></div>
+              <ul class="dataView">
+                <li>
+                  <p>服务缺陷</p>
+                  <p>{{ resultNum[0] }}</p>
+                </li>
+                <li>
+                  <p>客车不文明</p>
+                  <p>{{ resultNum[1] }}</p>
+                </li>
+                <li>
+                  <p>车站意外</p>
+                  <p>{{ resultNum[2] }}</p>
+                </li>
+              </ul>
             </div>
-          </div>
-          <div class="swiper-slide">
-            <div id="mapContainer"></div>
-          </div>
-        </div>
+          </swiper-slide>
+        </swiper>
       </div>
     </div>
   </div>
@@ -58,31 +71,46 @@
 import dayjs from "dayjs";
 import Js2WordCloud from "js2wordcloud";
 import Charts from "@jiaminghi/charts";
+import { Swiper, SwiperSlide, directive } from "vue-awesome-swiper";
+import "swiper/swiper-bundle.css";
 import {
   GET_WEIBO_INFO,
   POST_WEIBO_HOTWORD,
   POST_WEIBO_TOTAL,
 } from "../config/url";
-import Swiper from "swiper";
 
 export default {
   name: "publicOpinion",
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
+  directives: {
+    swiper: directive,
+  },
   data() {
     return {
+      swiperOption: {
+        // Some Swiper option/callback...
+      },
       currentTab: 1,
       publicList: [],
       keywordList: ["突发事件", "乘客之声", "运营服务"],
       wordCloudList: [],
       wordCloudShow: false,
       postTime: dayjs().format("YYYY-MM-DD HH:mm"),
-      //postTime:'2020-10-20 10:10:00',
-      // 地图数据
       legendArr: [],
       myChart: {},
       geoCoordMap: {},
       name: "散点图",
       mapData: [],
+      resultNum: [0, 0, 0],
     };
+  },
+  computed: {
+    swiper() {
+      return this.$refs.mySwiper.$swiper;
+    },
   },
   mounted() {
     this.getInfo();
@@ -90,26 +118,89 @@ export default {
     this.getWordCloud();
     this.getFenxi();
     this.getMapDate();
+    this.getOheterInfo(0);
+    this.getOheterInfo(1);
+    this.getOheterInfo(2);
+    let num = 0;
+    setInterval(() => {
+      num++;
+      if (num >= 3) {
+        num = 0;
+      }
 
-    new Swiper(".swiper-container", {
-      autoplay: true,
-      // 如果需要分页器
-      on: {
-        slideChangeTransitionStart: () => {
-          switch (this.activeIndex) {
-            case 1:
-              this.get24Info();
-              this.getWordCloud();
-              break;
-            case 2:
-              this.getFenxi();
-              break;
-          }
-        },
-      },
-    });
+      this.swiper.slideTo(num, 1000, false);
+    }, 10000);
   },
+
   methods: {
+    getOheterInfo(num) {
+      let arr = [
+        ["*投诉*", "*埋怨*", "*生气*", "*建议*"],
+        ["*冲突*", "*吵架*", "*争吵*", "*骂人*", "*冲突*"],
+        [
+          "*晚点*",
+          "*延误*",
+          "*停车*",
+          "*瘫痪*",
+          "*故障*",
+          "*停电*",
+          "*失火*",
+          "*淹水*",
+        ],
+      ];
+      let params = {
+        query: {
+          bool: {
+            filter: {
+              script: {
+                script: {
+                  params: {
+                    now_times: this.postTime,
+                  },
+                  source:
+                    "def sf = new SimpleDateFormat(\"yyyy-MM-dd' 'HH:mm\");def dt = sf.parse(doc['create_date.keyword'].value);def calendar = sf.getCalendar();calendar.setTime(dt);def instant = calendar.toInstant();def localDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.UTC); localDateTime = localDateTime .plusHours(24*7);def sf_now = new SimpleDateFormat(\"yyyy-MM-dd' 'HH:mm\");def dt_now = sf_now.parse(params.now_times);def calendar_now = sf_now.getCalendar();calendar_now.setTime(dt_now);def instant_now = calendar_now.toInstant();def localDateTime_now = LocalDateTime.ofInstant(instant_now, ZoneOffset.UTC); return localDateTime_now.compareTo(localDateTime)<=0;",
+                },
+              },
+            },
+            should: [],
+            minimum_should_match: 1,
+          },
+        },
+        from: 0,
+        size: 0,
+      };
+      for (let i = 0; i < arr[num].length; i++) {
+        params.query.bool.should.push({
+          wildcard: {
+            "text.keyword": arr[num][i],
+          },
+        });
+      }
+      this.$axios.post(GET_WEIBO_INFO, params).then((res) => {
+        this.$set(this.resultNum, num, res.data.hits.total);
+      });
+    },
+    initSwiper() {
+      this.swipier = new Swiper(".swiper-container", {
+        // 如果需要分页器
+        on: {
+          slideChangeTransitionStart: () => {
+            switch (this.activeIndex) {
+              case 1:
+                this.get24Info();
+                this.getWordCloud();
+                break;
+              case 2:
+                this.getFenxi();
+                break;
+            }
+          },
+        },
+        autoplay: {
+          disableOnInteraction: false,
+        },
+      });
+    },
     mapinit(options) {
       this.myChart = this.$echarts.init(
         document.getElementById("mapContainer")
@@ -125,6 +216,19 @@ export default {
           this.myChart.resize();
         }.bind(this)
       );
+
+      let index = 0; //播放所在下标
+      setInterval(() => {
+        this.myChart.dispatchAction({
+          type: "showTip",
+          seriesIndex: 0,
+          dataIndex: index,
+        });
+        index++;
+        if (index > this.mapData.length) {
+          index = 0;
+        }
+      }, 3000);
     },
     _getCityData() {
       this.geoCoordMap = {
@@ -295,7 +399,6 @@ export default {
               });
             }
           });
-          console.log("打印当前地图信息", this.mapData);
           this._getCityData();
         });
     },
@@ -325,7 +428,7 @@ export default {
           let valueArr = [];
           arr.forEach((item) => {
             output.push({
-              key: item._source.wbdate,
+              key: item._source.wbdate.slice(5, 10),
               value: item._source.wbtotal,
             });
           });
@@ -461,6 +564,7 @@ export default {
           let arr = res.data.aggregations._result.buckets;
           arr.forEach((item) => {
             this.wordCloudList.push([item.key, item.employed_origin.value]);
+            // this.wordCloudList.push([item.key, item.employed_origin.value]);
           });
           // 渲染词云
           var wc = new Js2WordCloud(
@@ -485,10 +589,10 @@ export default {
               },
             },
             list: this.wordCloudList, // 词云数据源2
-            gridSize: 11,
+            gridSize: 6,
             fontSizeFactor: 0.2,
-            maxFontSize: 26, //最大字号
-            minFontSize: 14, //最小字号
+            maxFontSize: 24, //最大字号
+            minFontSize: 12, //最小字号
             rotationSteps: 30,
             rotateRatio: 0, // 旋转概率
             ellipticity: 4,
@@ -632,7 +736,7 @@ export default {
               },
             },
             yAxis: {
-              name: "(个)",
+              name: "(条)",
               data: "value",
               nameTextStyle: {
                 fill: "#9BADF9",
@@ -754,6 +858,7 @@ export default {
           response.data.hits.hits.slice(0, 5).forEach((item) => {
             this.publicList.push({
               text: item._source.text.slice(0, 12) + "...",
+              //!目前是按照权重值进行的区分
               status: item._source.weight > 20 ? 1 : 2,
               time: item._source.create_date,
               source: item._source.source,
@@ -783,7 +888,7 @@ export default {
 }
 #analyse {
   width: 100%;
-  height: 30vh;
+  height: 27vh;
   display: block;
   overflow: hidden;
 }
@@ -908,6 +1013,19 @@ export default {
   #unmanned2 {
     width: 100%;
     height: 22vh;
+  }
+  .dataView {
+    display: flex;
+    li {
+      width: 100%;
+      background: #102563;
+      margin: 0 2px;
+      padding: 4px 0;
+      p:last-child {
+        color: #32c5ff;
+        font-size: 1.2rem;
+      }
+    }
   }
   .friends-word-cloud {
     margin: 0px 0 0.8rem;

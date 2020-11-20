@@ -17,6 +17,7 @@
     "lodash": "^4.17.20",
     "swiper": "^6.3.5",
     "vue": "^2.6.11",
+    "vue-awesome-swiper": "^4.1.1",
     "vue-router": "^3.4.7"
   },
   "devDependencies": {

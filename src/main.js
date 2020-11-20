@@ -8,6 +8,9 @@ import echarts from 'echarts'
 import 'echarts/map/js/china'
 import _ from 'lodash'
 
+
+ 
+
 Vue.prototype._ = _
 
 Vue.prototype.$echarts = echarts
