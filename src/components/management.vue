@@ -1,7 +1,7 @@
 <template>
   <div class="equipment">
     <div class="equipment-left">
-      <p>设备故障状态</p>
+      <p class="equipment-title">设备故障状态</p>
       <dv-decoration-9 :dur="6" class="malfunction">66%</dv-decoration-9>
       <ul class="equipment-ul">
         <li>
@@ -22,10 +22,10 @@
     <div class="equipment-right">
       <ul class="equipment-list">
         <li class="equipment-list-th">
-          <span>姓名</span>
+          <span>名称</span>
           <span>地点</span>
           <span>原因</span>
-          <span>发生故障时间</span>
+          <span>故障发生时间</span>
           <span>故障次数</span>
           <span>故障等级</span>
         </li>
@@ -206,11 +206,16 @@ export default {
 }
 .equipment-left {
   width: 24%;
-  p {
+  .equipment-title {
     color: #9badf9;
     font-size: 1rem;
     margin: 0;
-    padding-bottom: 0.6rem;
+    margin: 0;
+    height: 4vh;
+    line-height: 4vh;
+  }
+  p {
+    margin: 0;
     margin: 0;
   }
   .ring-charts {
@@ -221,7 +226,7 @@ export default {
   .malfunction {
     width: 15vh;
     height: 15vh;
-    margin: 1rem auto;
+    margin: 1vh auto;
     color: #32c5ff;
     font-size: 2rem;
     font-weight: bold;
@@ -231,8 +236,8 @@ export default {
   width: 76%;
   .equipment-list-th {
     background: rgba(8, 164, 251, 1);
-    margin: 0;
-    padding: 10px 0;
+    line-height: 3.8vh;
+    height: 3.8vh;
     span {
       color: rgba(14, 34, 90, 1);
       font-size: 0.8rem;
@@ -240,8 +245,9 @@ export default {
   }
   .equipment-list-tr {
     background: rgba(16, 37, 99, 1);
-    margin-bottom: 0.7rem;
-    padding: 1.3rem 0;
+    margin-bottom: 0.5vh;
+    line-height: 6.2vh;
+    height: 6.2vh;
     span {
       vertical-align: middle;
       font-size: 0.8rem;
@@ -253,7 +259,7 @@ export default {
   .equipment-list {
     list-style: none;
     margin: 0;
-    padding: 0 1rem 0 1rem;
+    line-height: 1.8vh;
     span {
       display: inline-block;
       width: 15%;
@@ -273,21 +279,23 @@ export default {
   li {
     float: left;
     width: 50%;
-    padding-bottom: 1rem;
+    height: 8vh;
+    line-height: 4vh;
     p {
       padding: 0;
       margin: 0;
+      width: 100%;
     }
     .title {
       color: #9badf9;
       font-size: 1rem;
-      padding: 6px 0;
+      position: relative;
+      top: 1.4vh;
     }
     .number {
       color: #32c5ff;
       font-size: 1.2rem;
       font-weight: bold;
-      padding-top: 10px;
     }
   }
 }

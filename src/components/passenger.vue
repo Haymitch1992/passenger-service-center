@@ -247,7 +247,7 @@ export default {
 <style scoped lang="scss">
 .border-box-content {
   display: flex;
-  padding: 4rem 30px 0;
+  padding: 5vh 1vw 0;
   #unmanned {
     width: 100%;
     height: 22vh;
@@ -259,15 +259,18 @@ export default {
       list-style: none;
       padding: 0 0 0 2rem;
       margin: 0;
+      width: 100%;
       li {
         width: 100%;
+        height: 6vh;
         p {
           color: #9badf9;
           font-size: 16px;
         }
         p:first-child {
           text-align: left;
-          margin-bottom: 8px;
+          position: relative;
+          top: 0.6vh;
         }
         .unit {
           color: #9badf9;
@@ -286,16 +289,22 @@ export default {
       list-style: none;
       color: #9badf9;
       font-size: 16px;
-      height: 60px;
-      padding-left: 25px;
       margin: 0.2rem 0 0.4rem 0;
+      padding: 0 0 0 2rem;
+      line-height: 3vh;
+      height: 6vh;
+
       li {
         padding: 4px 0;
+        p:first-child {
+          position: relative;
+          top: 0.4vh;
+        }
       }
       p {
-        padding: 4px 0 0 0;
         margin: 0;
       }
+
       .current-item {
         background: #102563;
         width: 20%;
@@ -309,7 +318,6 @@ export default {
         color: #32c5ff;
         font-size: 14px;
         box-sizing: border-box;
-        padding: 14px 0 13px 10px;
         p {
           padding: 0;
           font-weight: bold;
@@ -330,21 +338,21 @@ export default {
     }
     .unmanned-title {
       font-size: 1.2rem;
-      margin-bottom: 1rem;
+      line-height: 4vh;
     }
     .progress-out {
       width: 80%;
-      height: 1.4rem;
+      height: 2.2vh;
       border-radius: 20px;
       background: #102563;
       box-sizing: border-box;
       position: relative;
       overflow: hidden;
-      margin-bottom: 0.9rem;
+      margin-bottom: 1.2vh;
       .number {
         position: absolute;
         right: 10px;
-        line-height: 1.4rem;
+        line-height: 2.2vh;
         top: 0;
         z-index: 2;
         font-size: 0.6rem;
@@ -355,12 +363,12 @@ export default {
         position: relative;
         z-index: 2;
         font-size: 0.6rem;
-        line-height: 1.4rem;
+        line-height: 2.2vh;
       }
     }
     .progress-inner {
       width: 0%;
-      height: 1.4rem;
+      height: 2.2vh;
       background: linear-gradient(to right, #2760e4, #32c5ff);
       z-index: 1;
       position: absolute;

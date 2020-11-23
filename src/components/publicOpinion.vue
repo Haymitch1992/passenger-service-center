@@ -288,14 +288,12 @@ export default {
     _getMyChart() {
       let options = {
         // backgroundColor: '#404a59',
-
         title: {
           text: "地铁城市舆情数据",
           textStyle: {
             color: "#9BADF9",
             fontSize: 14,
           },
-          top: 10,
         },
         tooltip: {
           trigger: "item",
@@ -309,7 +307,7 @@ export default {
         visualMap: {
           min: 0,
           max: 200,
-          bottom: 40,
+          bottom: "10%",
           splitNumber: 5,
           inRange: {
             color: ["#255B78", "#2A7484", "#2F9696", "#3BBCB0", "#51D4EB"],
@@ -326,8 +324,8 @@ export default {
             },
           },
           zoom: 1,
-          top: 50,
-          left: 120,
+          top: "10%",
+          left: "20%",
           itemStyle: {
             normal: {
               color: "#3c4247",
@@ -589,10 +587,10 @@ export default {
               },
             },
             list: this.wordCloudList, // 词云数据源2
-            gridSize: 6,
-            fontSizeFactor: 0.2,
+            gridSize: 12,
+            fontSizeFactor: 0.4,
             maxFontSize: 24, //最大字号
-            minFontSize: 12, //最小字号
+            minFontSize: 14, //最小字号
             rotationSteps: 30,
             rotateRatio: 0, // 旋转概率
             ellipticity: 4,
@@ -888,7 +886,7 @@ export default {
 }
 #analyse {
   width: 100%;
-  height: 27vh;
+  height: 28vh;
   display: block;
   overflow: hidden;
 }
@@ -911,18 +909,25 @@ export default {
     margin: 0;
   }
   .public-content {
-    padding: 1.8rem 1rem 0 2rem;
+    padding: 2vh 1vw 1vh 2vw;
     color: rgba(255, 255, 255, 0.85);
     font-size: 12px;
     p {
-      margin: 0.5rem 0;
+      margin: 0;
     }
     .public-title {
       font-size: 0.8rem;
+      position: relative;
+      top: 0.6vh;
     }
     li {
-      height: 4rem;
+      height: 6.8vh;
+      line-height: 3vh;
       position: relative;
+      p:first-child {
+        position: relative;
+        left: -12px;
+      }
     }
     li:after {
       content: "";
@@ -944,9 +949,9 @@ export default {
       height: 6px;
       border-radius: 50%;
       display: inline-block;
-      position: absolute;
-      left: -24px;
-      top: 2px;
+      position: relative;
+      left: -12px;
+      top: 0px;
     }
     .s-1 {
       background: #df2021;
@@ -1020,7 +1025,11 @@ export default {
       width: 100%;
       background: #102563;
       margin: 0 2px;
-      padding: 4px 0;
+      line-height: 3vh;
+      p:first-child {
+        position: relative;
+        top: 1vh;
+      }
       p:last-child {
         color: #32c5ff;
         font-size: 1.2rem;

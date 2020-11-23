@@ -108,8 +108,9 @@ export default {
 
 <style scoped>
 .equipment-container {
-  width: 100%;
-  padding-top: 3.5rem;
-  height: calc(100% - 7rem);
+  width: calc(100% - 2vw);
+  margin: 0 auto;
+  padding-top: 5vh;
+  height: calc(100% - 10vh);
 }
 </style>
