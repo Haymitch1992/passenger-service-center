@@ -265,7 +265,7 @@ export default {
         height: 6vh;
         p {
           color: #9badf9;
-          font-size: 16px;
+          font-size: 14px;
         }
         p:first-child {
           text-align: left;
@@ -309,6 +309,7 @@ export default {
         background: #102563;
         width: 20%;
         float: left;
+        font-size: 14px;
       }
       .current-item:last-child {
         width: 25%;
@@ -337,7 +338,7 @@ export default {
       padding: 0;
     }
     .unmanned-title {
-      font-size: 1.2rem;
+      font-size: 1rem;
       line-height: 4vh;
     }
     .progress-out {

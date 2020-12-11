@@ -236,21 +236,21 @@ export default {
   width: 76%;
   .equipment-list-th {
     background: rgba(8, 164, 251, 1);
-    line-height: 3.8vh;
-    height: 3.8vh;
+    line-height: 3vh;
+    height: 3vh;
     span {
       color: rgba(14, 34, 90, 1);
-      font-size: 0.8rem;
+      font-size: 0.7rem;
     }
   }
   .equipment-list-tr {
-    background: rgba(16, 37, 99, 1);
-    margin-bottom: 0.5vh;
-    line-height: 6.2vh;
-    height: 6.2vh;
+    background: #172e73;
+    margin-top: 1vh;
+    line-height: 5.4vh;
+    height: 5.4vh;
     span {
       vertical-align: middle;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
     }
   }
   .equipment-list-tr:last-child {

@@ -909,7 +909,7 @@ export default {
     margin: 0;
   }
   .public-content {
-    padding: 2vh 1vw 1vh 2vw;
+    padding: 3vh 1vw 0vh 2vw;
     color: rgba(255, 255, 255, 0.85);
     font-size: 12px;
     p {
@@ -972,7 +972,7 @@ export default {
     left: -13px;
     width: 100%;
     li {
-      width: 32%;
+      width: 31%;
       font-size: 0.8rem;
       height: 1.4rem;
       line-height: 1.4rem;
@@ -993,7 +993,7 @@ export default {
       margin-right: 0;
     }
     li:first-child {
-      width: 34%;
+      width: 36%;
     }
     .active {
       background: #32c5ff;
@@ -1006,7 +1006,7 @@ export default {
   width: 30%;
   float: left;
   background: linear-gradient(#102563, #102563);
-  margin-left: 60px;
+  margin-left: 40px;
   position: relative;
   overflow: hidden;
 }
