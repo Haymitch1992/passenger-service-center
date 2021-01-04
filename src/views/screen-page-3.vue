@@ -74,7 +74,7 @@
             <dv-border-box-10 class="monitoring-item">
               <div class="monitoring-container">
                 <div class="monitoring-left">
-                  <img src="" alt="" class="monitoring-img" />
+                  <div src="" alt="" class="monitoring-img" />
                 </div>
                 <div class="monitoring-right">
                   <p>
@@ -90,7 +90,7 @@
             <dv-border-box-10 class="monitoring-item">
               <div class="monitoring-container">
                 <div class="monitoring-left">
-                  <img src="" alt="" class="monitoring-img" />
+                  <div src="" alt="" class="monitoring-img" />
                 </div>
                 <div class="monitoring-right">
                   <p>
@@ -106,7 +106,7 @@
             <dv-border-box-10 class="monitoring-item">
               <div class="monitoring-container">
                 <div class="monitoring-left">
-                  <img src="" alt="" class="monitoring-img" />
+                  <div src="" alt="" class="monitoring-img" />
                 </div>
                 <div class="monitoring-right">
                   <p>
@@ -122,7 +122,7 @@
             <dv-border-box-10 class="monitoring-item">
               <div class="monitoring-container">
                 <div class="monitoring-left">
-                  <img src="" alt="" class="monitoring-img" />
+                  <div src="" alt="" class="monitoring-img" />
                 </div>
                 <div class="monitoring-right">
                   <p>
@@ -138,7 +138,7 @@
             <dv-border-box-10 class="monitoring-item">
               <div class="monitoring-container">
                 <div class="monitoring-left">
-                  <img src="" alt="" class="monitoring-img" />
+                  <div src="" alt="" class="monitoring-img" />
                 </div>
                 <div class="monitoring-right">
                   <p>
@@ -214,7 +214,7 @@ export default {
     }
   }
   .video-box {
-    background: #ddd;
+    background: #203565;
     width: 100%;
     height: 32vh;
   }
@@ -237,7 +237,7 @@ export default {
     line-height: 50px;
     padding-left: 20px;
     span {
-      padding: 0 50px 0 0;
+      padding: 0 30px 0 0;
     }
   }
 }
@@ -260,7 +260,7 @@ export default {
       width: 80%;
       margin: 2vh auto;
       height: 10vh;
-      background: #ddd;
+      background: #203565;
       display: block;
     }
   }
