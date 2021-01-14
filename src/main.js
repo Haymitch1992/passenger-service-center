@@ -9,7 +9,11 @@ import 'echarts/map/js/china'
 import _ from 'lodash'
 
 
- 
+ // 引入rtmp 播放插件
+import flowplayer from '../js/flowplayer-3.2.8.min.js'
+
+
+Vue.prototype.flowplayer = flowplayer
 
 Vue.prototype._ = _
 

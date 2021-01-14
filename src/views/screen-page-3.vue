@@ -16,50 +16,20 @@
           </ul>
           <div>
             <ul class="screen-left-ul">
-              <li>
+              <li v-for="(item, index) in videoList" :key="index">
                 <dv-border-box-13>
                   <div class="video">
-                    <div class="video-box"></div>
-                    <div class="video-title">
-                      <span>类型：特殊人群实时监控</span>
-                      <span>位置：出站口A扶梯处</span>
-                      <span>状态：正常</span>
+                    <div class="video-box">
+                      <a
+                        href="#"
+                        style="display:block;width:100%;height:100%;"
+                        :id="'player' + index"
+                      ></a>
                     </div>
-                  </div>
-                </dv-border-box-13>
-              </li>
-              <li>
-                <dv-border-box-13>
-                  <div class="video">
-                    <div class="video-box"></div>
                     <div class="video-title">
-                      <span>类型：特殊人群实时监控</span>
-                      <span>位置：出站口A扶梯处</span>
-                      <span>状态：正常</span>
-                    </div>
-                  </div>
-                </dv-border-box-13>
-              </li>
-              <li>
-                <dv-border-box-13>
-                  <div class="video">
-                    <div class="video-box"></div>
-                    <div class="video-title">
-                      <span>类型：特殊人群实时监控</span>
-                      <span>位置：出站口A扶梯处</span>
-                      <span>状态：正常</span>
-                    </div>
-                  </div>
-                </dv-border-box-13>
-              </li>
-              <li>
-                <dv-border-box-13>
-                  <div class="video">
-                    <div class="video-box"></div>
-                    <div class="video-title">
-                      <span>类型：特殊人群实时监控</span>
-                      <span>位置：出站口A扶梯处</span>
-                      <span>状态：正常</span>
+                      <span>类型：{{ item.type }}</span>
+                      <span>位置：{{ item.pos }}</span>
+                      <span>状态：{{ item.status }}</span>
                     </div>
                   </div>
                 </dv-border-box-13>
@@ -159,8 +129,49 @@
 </template>
 
 <script>
+import { GET_VIDEO_LIST } from '../config/url';
+
 export default {
-  name: "screen-page-3",
+  name: 'screen-page-3',
+  data() {
+    return {
+      videoList: [],
+    };
+  },
+  mounted() {
+    this.getVideoList();
+  },
+  methods: {
+    startVideo(str, url) {
+      setTimeout(() => {
+        let urls = 'rtmp://58.200.131.2:1935/livetv/hunantv';
+        window.flowplayer(str, 'flowplayer-3.2.18.swf', {
+          clip: {
+            url: urls,
+            provider: 'rtmp',
+            muted: false,
+            live: true,
+          },
+          plugins: {
+            rtmp: {
+              url: 'flowplayer.rtmp-3.2.8.swf',
+              netConnectionUrl: url,
+            },
+          },
+        });
+      });
+    },
+    getVideoList() {
+      this.$axios.get(GET_VIDEO_LIST).then((res) => {
+        console.log(res.data);
+        this.videoList = res.data;
+        this.videoList.forEach((item, index) => {
+          console.log(item);
+          this.startVideo('player' + index, item.flow);
+        });
+      });
+    },
+  },
 };
 </script>
 
@@ -170,7 +181,7 @@ export default {
 }
 .screen-title {
   height: 100px;
-  background: url("../assets/title-line.png") no-repeat 0 40px;
+  background: url('../assets/title-line.png') no-repeat 0 40px;
   position: relative;
   .screen-title-time {
     display: inline-block;
@@ -220,7 +231,7 @@ export default {
   }
   .video {
     padding: 24px 20px 24px 20px;
-    height: 30vh;
+    height: 32vh;
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
