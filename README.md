@@ -30,6 +30,6 @@ npm run lint
 
 ### Customize configuration
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
-参考文档[web video](https://savokiss.com/tech/web-live-tech-with-vue.html)
-"# passenger-service-center"
+参考文档
+
+[前端渲染 RTMP 视频流方案](https://savokiss.com/tech/web-live-tech-with-vue.html)
