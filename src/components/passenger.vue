@@ -1,67 +1,70 @@
 <template>
-  <div class="border-box-content">
-    <div class="unmanned-left">
-      <div class="unmanned-chart" id="unmanned"></div>
-      <ul class="current-status">
-        <li class="current-item current-title">
-          <p>当前</p>
-          <p>状况:</p>
-        </li>
-        <li class="current-item">
-          <p>接入数量</p>
-          <p class="number">{{ current_status['接入数量'] }}</p>
-        </li>
-        <li class="current-item">
-          <p>自动回复数量</p>
-          <p class="number">{{ current_status['自动回复数量'] }}</p>
-        </li>
-        <li class="current-item">
-          <p>人工回复数量</p>
-          <p class="number">{{ current_status['人工回复数量'] }}</p>
-        </li>
-        <li class="current-item">
-          <p>当日接入总数量</p>
-          <p class="number">{{ current_status['当日接入总数量'] }}</p>
-        </li>
-      </ul>
-      <ul class="efficiency">
-        <li>
-          <p>自动回复解决成功率</p>
-          <span class="unit">（天)</span>
-          <span class="number">{{
-            auto_replay_success['自动回复解决成功率'] * 100 + '%'
-          }}</span>
-        </li>
-        <li>
-          <p>自动回复解决成功率</p>
-          <span class="unit">（天)</span>
-          <span class="number">{{
-            auto_replay_success['自动回复解决成功率'] * 100 + '%'
-          }}</span>
-        </li>
-        <li>
-          <p>自动回复解决成功率</p>
-          <span class="unit">（天)</span>
-          <span class="number">{{
-            auto_replay_success['自动回复解决成功率'] * 100 + '%'
-          }}</span>
-        </li>
-      </ul>
-    </div>
-    <div class="unmanned-right">
-      <p class="unmanned-title">热门问题Top10</p>
-      <div>
-        <div
-          class="progress-out"
-          :key="index"
-          v-for="(item, index) in hotIssue"
-        >
-          <p class="progress-text">{{ item.text }}</p>
+  <div>
+    <dv-loading v-if="isloading" style="height:50vh;">Loading...</dv-loading>
+    <div class="border-box-content">
+      <div class="unmanned-left">
+        <div class="unmanned-chart" id="unmanned"></div>
+        <ul class="current-status">
+          <li class="current-item current-title">
+            <p>当前</p>
+            <p>状况:</p>
+          </li>
+          <li class="current-item">
+            <p>接入数量</p>
+            <p class="number">{{ current_status['接入数量'] }}</p>
+          </li>
+          <li class="current-item">
+            <p>自动回复数量</p>
+            <p class="number">{{ current_status['自动回复数量'] }}</p>
+          </li>
+          <li class="current-item">
+            <p>人工回复数量</p>
+            <p class="number">{{ current_status['人工回复数量'] }}</p>
+          </li>
+          <li class="current-item">
+            <p>当日接入总数量</p>
+            <p class="number">{{ current_status['当日接入总数量'] }}</p>
+          </li>
+        </ul>
+        <ul class="efficiency">
+          <li>
+            <p>自动回复解决成功率</p>
+            <span class="unit">（天)</span>
+            <span class="number">{{
+              auto_replay_success['自动回复解决成功率'] * 100 + '%'
+            }}</span>
+          </li>
+          <li>
+            <p>自动回复解决成功率</p>
+            <span class="unit">（天)</span>
+            <span class="number">{{
+              auto_replay_success['自动回复解决成功率'] * 100 + '%'
+            }}</span>
+          </li>
+          <li>
+            <p>自动回复解决成功率</p>
+            <span class="unit">（天)</span>
+            <span class="number">{{
+              auto_replay_success['自动回复解决成功率'] * 100 + '%'
+            }}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="unmanned-right">
+        <p class="unmanned-title">热门问题Top10</p>
+        <div>
           <div
-            class="progress-inner"
-            :style="{ width: (item.value / hotIssue[0].value) * 100 + '%' }"
-          ></div>
-          <span class="number">{{ item.value }}</span>
+            class="progress-out"
+            :key="index"
+            v-for="(item, index) in hotIssue"
+          >
+            <p class="progress-text">{{ item.text }}</p>
+            <div
+              class="progress-inner"
+              :style="{ width: (item.value / hotIssue[0].value) * 100 + '%' }"
+            ></div>
+            <span class="number">{{ item.value }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -75,6 +78,7 @@ export default {
   name: 'passenger',
   data() {
     return {
+      isloading: true,
       hotIssue: [], // 热门问题
       xAxisValue: [],
       seriesValueA: [],
@@ -86,6 +90,7 @@ export default {
   methods: {
     getVideoList() {
       this.$axios.get(GET_CUSTOMER).then((res) => {
+        this.isloading = false;
         this.hotIssue = [];
         // 处理热门问题
         for (let k in res.data.top_questions) {
@@ -107,6 +112,7 @@ export default {
     },
     drawEcharts() {
       const container2 = document.getElementById('unmanned');
+      console.log(container2);
       const myChart2 = new Charts(container2);
       const option2 = {
         title: {

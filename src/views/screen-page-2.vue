@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "screen-page-2",
+  name: 'screen-page-2',
 };
 </script>
 
@@ -21,7 +21,7 @@ export default {
   font-size: 24px;
   height: 80px;
   line-height: 80px;
-  background: url("../assets/page2-title.png") no-repeat 0px 10px;
+  background: url('../assets/page2-title.png') no-repeat 0px 10px;
   background-size: 100vw;
   margin: 22px 0;
 }

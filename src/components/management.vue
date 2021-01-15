@@ -1,67 +1,71 @@
 <template>
-  <div class="equipment">
-    <div class="equipment-left">
-      <p class="equipment-title">设备故障状态</p>
-      <dv-decoration-9 :dur="6" class="malfunction">66%</dv-decoration-9>
-      <ul class="equipment-ul">
-        <li>
-          <p class="title">接入数量</p>
-          <p class="number">200</p>
-        </li>
-        <li>
-          <p class="title">故障数量</p>
-          <p class="number">30</p>
-        </li>
-        <li>
-          <p class="title">正常数量</p>
-          <p class="number">170</p>
-        </li>
-      </ul>
-    </div>
+  <div>
+    <dv-loading v-if="isloading" style="height:50vh;">Loading...</dv-loading>
+    <div class="equipment">
+      <div class="equipment-left">
+        <p class="equipment-title">设备故障状态</p>
+        <dv-decoration-9 :dur="6" class="malfunction">66%</dv-decoration-9>
+        <ul class="equipment-ul">
+          <li>
+            <p class="title">接入数量</p>
+            <p class="number">200</p>
+          </li>
+          <li>
+            <p class="title">故障数量</p>
+            <p class="number">30</p>
+          </li>
+          <li>
+            <p class="title">正常数量</p>
+            <p class="number">170</p>
+          </li>
+        </ul>
+      </div>
 
-    <div class="equipment-right">
-      <ul class="equipment-list">
-        <li class="equipment-list-th">
-          <span>名称</span>
-          <span>地点</span>
-          <span>原因</span>
-          <span>故障发生时间</span>
-          <span>故障次数</span>
-          <span>故障等级</span>
-        </li>
-        <li
-          class="equipment-list-tr"
-          :key="index"
-          v-for="(item, index) in config.data"
-        >
-          <span>{{ item[0] }}</span>
-          <span>{{ item[1] }}</span>
-          <span>{{ item[2] }}</span>
-          <span style="line-height: 20px;">{{ item[3] }}</span>
-          <span>{{ item[4] }}</span>
-          <span>{{ item[5] }}</span>
-        </li>
-      </ul>
+      <div class="equipment-right">
+        <ul class="equipment-list">
+          <li class="equipment-list-th">
+            <span>名称</span>
+            <span>地点</span>
+            <span>原因</span>
+            <span>故障发生时间</span>
+            <span>故障次数</span>
+            <span>故障等级</span>
+          </li>
+          <li
+            class="equipment-list-tr"
+            :key="index"
+            v-for="(item, index) in config.data"
+          >
+            <span>{{ item[0] }}</span>
+            <span>{{ item[1] }}</span>
+            <span>{{ item[2] }}</span>
+            <span style="line-height: 20px;">{{ item[3] }}</span>
+            <span>{{ item[4] }}</span>
+            <span>{{ item[5] }}</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import Charts from "@jiaminghi/charts";
+import Charts from '@jiaminghi/charts';
 export default {
-  name: "management",
+  name: 'management',
   data() {
     return {
+      isloading: true,
       currentStatus: [8, 5, 3, 60],
       equipmentData: {
         series: [
           {
-            type: "gauge",
+            type: 'gauge',
             startAngle: -Math.PI / 2,
             endAngle: Math.PI * 1.5,
             arcLineWidth: 13,
-            radius: "80%",
-            data: [{ name: "资金占比", value: 44 }],
+            radius: '80%',
+            data: [{ name: '资金占比', value: 44 }],
             axisLabel: {
               show: false,
             },
@@ -73,102 +77,102 @@ export default {
             },
             backgroundArc: {
               style: {
-                stroke: "#224590",
+                stroke: '#224590',
               },
             },
             details: {
               show: true,
-              formatter: "{value}%",
+              formatter: '{value}%',
               style: {
-                fill: "#1ed3e5",
+                fill: '#1ed3e5',
                 fontSize: 20,
               },
             },
           },
         ],
-        color: ["#03d3ec"],
+        color: ['#03d3ec'],
       },
       config: {
         header: [
-          "名称",
-          "地点",
-          "原因",
-          "发生故障时间",
-          "故障次数",
-          "故障等级",
+          '名称',
+          '地点',
+          '原因',
+          '发生故障时间',
+          '故障次数',
+          '故障等级',
         ],
         data: [
           [
-            "tipss_controller_066_1",
-            "066车1车厢",
-            "设备断电",
-            "2020/08/31 22:22:22",
-            "1",
-            "低",
+            'tipss_controller_066_1',
+            '066车1车厢',
+            '设备断电',
+            '2020/08/31 22:22:22',
+            '1',
+            '低',
           ],
           [
-            "tipss_controller_066_2",
-            "066车1车厢",
-            "设备断电",
-            "2020/08/31 22:22:22",
-            "1",
-            "低",
+            'tipss_controller_066_2',
+            '066车1车厢',
+            '设备断电',
+            '2020/08/31 22:22:22',
+            '1',
+            '低',
           ],
           [
-            "tipss_controller_066_3",
-            "066车1车厢",
-            "设备断电",
-            "2020/08/31 22:22:22",
-            "1",
-            "低",
+            'tipss_controller_066_3',
+            '066车1车厢',
+            '设备断电',
+            '2020/08/31 22:22:22',
+            '1',
+            '低',
           ],
           [
-            "tipss_controller_066_4",
-            "066车1车厢",
-            "设备断电",
-            "2020/08/31 22:22:22",
-            "1",
-            "低",
+            'tipss_controller_066_4',
+            '066车1车厢',
+            '设备断电',
+            '2020/08/31 22:22:22',
+            '1',
+            '低',
           ],
           [
-            "tipss_controller_066_5",
-            "066车1车厢",
-            "设备断电",
-            "2020/08/31 22:22:22",
-            "1",
-            "低",
+            'tipss_controller_066_5',
+            '066车1车厢',
+            '设备断电',
+            '2020/08/31 22:22:22',
+            '1',
+            '低',
           ],
         ],
         index: true,
         columnWidth: [50, 170, 300],
-        align: ["center"],
+        align: ['center'],
         rowNum: 5,
-        headerBGC: "#1981f6",
+        headerBGC: '#1981f6',
         headerHeight: 0,
-        oddRowBGC: "rgba(0, 44, 81, 0.8)",
-        evenRowBGC: "rgba(10, 29, 50, 0.8)",
+        oddRowBGC: 'rgba(0, 44, 81, 0.8)',
+        evenRowBGC: 'rgba(10, 29, 50, 0.8)',
       },
     };
   },
   methods: {
     drawChart() {
-      const container = document.getElementById("gauge");
+      const container = document.getElementById('gauge');
       const myChart = new Charts(container);
       const option1 = {
         series: [
           {
-            type: "gauge",
+            type: 'gauge',
             startAngle: -Math.PI / 2,
             endAngle: Math.PI * 1.5,
             arcLineWidth: 16,
-            data: [{ value: 65, gradient: ["#03c2fd", "#1ed3e5", "#2fded6"] }],
+            data: [{ value: 65, gradient: ['#03c2fd', '#1ed3e5', '#2fded6'] }],
             axisLabel: {
               show: false,
             },
             axisTick: {
               show: false,
               style: {
-                stroke: "#393939",
+                stroke: '#393939',
                 lineWidth: 1,
               },
             },
@@ -177,13 +181,13 @@ export default {
             },
             // #393939
             dataItemStyle: {
-              lineCap: "round",
+              lineCap: 'round',
             },
             details: {
               show: true,
-              formatter: "{value}%",
+              formatter: '{value}%',
               style: {
-                fill: "#1ed3e5",
+                fill: '#1ed3e5',
                 fontSize: 35,
               },
             },
@@ -194,6 +198,9 @@ export default {
     },
   },
   mounted() {
+    setTimeout(() => {
+      this.isloading = false;
+    }, 2000);
     // this.drawChart()
   },
 };

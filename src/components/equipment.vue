@@ -1,5 +1,12 @@
 <template>
-  <div id="equipment-container" class="equipment-container"></div>
+  <div>
+    <dv-loading v-if="isloading" style="height:50vh;">Loading...</dv-loading>
+    <div
+      v-show="!isloading"
+      id="equipment-container"
+      class="equipment-container"
+    ></div>
+  </div>
 </template>
 
 <script>
@@ -10,6 +17,7 @@ export default {
   name: 'equipment',
   data() {
     return {
+      isloading: true,
       xAxisValue: [],
       seriesValue: [],
     };
@@ -22,7 +30,11 @@ export default {
           this.seriesValue.push(res.data[k]);
         }
         console.log(this.xAxisValue, this.seriesValue);
-        this.drawEcharts();
+
+        this.isloading = false;
+        setTimeout(() => {
+          this.drawEcharts();
+        });
       });
     },
     drawEcharts() {
@@ -120,6 +132,6 @@ export default {
   width: calc(100% - 2vw);
   margin: 0 auto;
   padding-top: 5vh;
-  height: calc(100% - 10vh);
+  height: 32vh !important;
 }
 </style>

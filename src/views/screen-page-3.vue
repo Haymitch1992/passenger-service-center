@@ -20,11 +20,7 @@
                 <dv-border-box-13>
                   <div class="video">
                     <div class="video-box">
-                      <a
-                        href="#"
-                        style="display:block;width:100%;height:100%;"
-                        :id="'player' + index"
-                      ></a>
+                      <videobox></videobox>
                     </div>
                     <div class="video-title">
                       <span>类型：{{ item.type }}</span>
@@ -130,45 +126,26 @@
 
 <script>
 import { GET_VIDEO_LIST } from '../config/url';
-
+import videobox from '../components/video';
 export default {
   name: 'screen-page-3',
+  components: {
+    videobox,
+  },
   data() {
     return {
       videoList: [],
     };
   },
+
   mounted() {
     this.getVideoList();
   },
   methods: {
-    startVideo(str, url) {
-      setTimeout(() => {
-        let urls = 'rtmp://58.200.131.2:1935/livetv/hunantv';
-        window.flowplayer(str, 'flowplayer-3.2.18.swf', {
-          clip: {
-            url: urls,
-            provider: 'rtmp',
-            muted: false,
-            live: true,
-          },
-          plugins: {
-            rtmp: {
-              url: 'flowplayer.rtmp-3.2.8.swf',
-              netConnectionUrl: url,
-            },
-          },
-        });
-      });
-    },
     getVideoList() {
       this.$axios.get(GET_VIDEO_LIST).then((res) => {
         console.log(res.data);
         this.videoList = res.data;
-        this.videoList.forEach((item, index) => {
-          console.log(item);
-          this.startVideo('player' + index, item.flow);
-        });
       });
     },
   },
@@ -228,6 +205,7 @@ export default {
     background: #203565;
     width: 100%;
     height: 32vh;
+    position: relative;
   }
   .video {
     padding: 24px 20px 24px 20px;

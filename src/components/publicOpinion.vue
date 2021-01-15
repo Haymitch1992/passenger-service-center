@@ -1,86 +1,89 @@
 <template>
-  <div class="public-container">
-    <div class="public-left">
-      <div>
-        <ul class="public-tab">
-          <li :class="{ active: currentTab === 1 }" @click="changeInfo(1)">
-            <span>突发事件</span>
-          </li>
-          <li :class="{ active: currentTab === 2 }" @click="changeInfo(2)">
-            <span>乘客之声</span>
-          </li>
-          <li :class="{ active: currentTab === 3 }" @click="changeInfo(3)">
-            <span>运营服务</span>
-          </li>
-        </ul>
-        <ul class="public-content">
-          <li v-for="(item, index) in publicList" :key="index">
-            <p class="public-title">
-              <span class="public-status" :class="`s-${item.status}`"></span
-              >{{ item.text }}
-            </p>
-            <p>
-              {{ item.time }} <span class="source">{{ item.source }}</span>
-            </p>
-          </li>
-        </ul>
+  <div>
+    <dv-loading v-if="isloading" style="height:50vh;">Loading...</dv-loading>
+    <div class="public-container">
+      <div class="public-left">
+        <div>
+          <ul class="public-tab">
+            <li :class="{ active: currentTab === 1 }" @click="changeInfo(1)">
+              <span>突发事件</span>
+            </li>
+            <li :class="{ active: currentTab === 2 }" @click="changeInfo(2)">
+              <span>乘客之声</span>
+            </li>
+            <li :class="{ active: currentTab === 3 }" @click="changeInfo(3)">
+              <span>运营服务</span>
+            </li>
+          </ul>
+          <ul class="public-content">
+            <li v-for="(item, index) in publicList" :key="index">
+              <p class="public-title">
+                <span class="public-status" :class="`s-${item.status}`"></span
+                >{{ item.text }}
+              </p>
+              <p>
+                {{ item.time }} <span class="source">{{ item.source }}</span>
+              </p>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="public-right">
-      <div class="swiper-container">
-        <swiper :options="swiperOption" ref="mySwiper">
-          <!-- slides -->
-          <swiper-slide>
-            <div class="analyse-box">
-              <div id="unmanned2"></div>
-            </div>
-            <div class="map-box">
-              <p>地铁热词</p>
-              <div id="friendsWordCloud" class="friends-word-cloud"></div>
-            </div>
-          </swiper-slide>
-          <swiper-slide>
-            <div id="mapContainer"></div>
-          </swiper-slide>
-          <swiper-slide>
-            <div class="analyse-box">
-              <div id="analyse" class="analyse"></div>
-              <ul class="dataView">
-                <li>
-                  <p>服务缺陷</p>
-                  <p>{{ resultNum[0] }}</p>
-                </li>
-                <li>
-                  <p>客车不文明</p>
-                  <p>{{ resultNum[1] }}</p>
-                </li>
-                <li>
-                  <p>车站意外</p>
-                  <p>{{ resultNum[2] }}</p>
-                </li>
-              </ul>
-            </div>
-          </swiper-slide>
-        </swiper>
+      <div class="public-right">
+        <div class="swiper-container">
+          <swiper :options="swiperOption" ref="mySwiper">
+            <!-- slides -->
+            <swiper-slide>
+              <div class="analyse-box">
+                <div id="unmanned2"></div>
+              </div>
+              <div class="map-box">
+                <p>地铁热词</p>
+                <div id="friendsWordCloud" class="friends-word-cloud"></div>
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div id="mapContainer"></div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="analyse-box">
+                <div id="analyse" class="analyse"></div>
+                <ul class="dataView">
+                  <li>
+                    <p>服务缺陷</p>
+                    <p>{{ resultNum[0] }}</p>
+                  </li>
+                  <li>
+                    <p>客车不文明</p>
+                    <p>{{ resultNum[1] }}</p>
+                  </li>
+                  <li>
+                    <p>车站意外</p>
+                    <p>{{ resultNum[2] }}</p>
+                  </li>
+                </ul>
+              </div>
+            </swiper-slide>
+          </swiper>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import dayjs from "dayjs";
-import Js2WordCloud from "js2wordcloud";
-import Charts from "@jiaminghi/charts";
-import { Swiper, SwiperSlide, directive } from "vue-awesome-swiper";
-import "swiper/swiper-bundle.css";
+import dayjs from 'dayjs';
+import Js2WordCloud from 'js2wordcloud';
+import Charts from '@jiaminghi/charts';
+import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper';
+import 'swiper/swiper-bundle.css';
 import {
   GET_WEIBO_INFO,
   POST_WEIBO_HOTWORD,
   POST_WEIBO_TOTAL,
-} from "../config/url";
+} from '../config/url';
 
 export default {
-  name: "publicOpinion",
+  name: 'publicOpinion',
   components: {
     Swiper,
     SwiperSlide,
@@ -90,19 +93,20 @@ export default {
   },
   data() {
     return {
+      isloading: true,
       swiperOption: {
         // Some Swiper option/callback...
       },
       currentTab: 1,
       publicList: [],
-      keywordList: ["突发事件", "乘客之声", "运营服务"],
+      keywordList: ['突发事件', '乘客之声', '运营服务'],
       wordCloudList: [],
       wordCloudShow: false,
-      postTime: dayjs().format("YYYY-MM-DD HH:mm"),
+      postTime: dayjs().format('YYYY-MM-DD HH:mm'),
       legendArr: [],
       myChart: {},
       geoCoordMap: {},
-      name: "散点图",
+      name: '散点图',
       mapData: [],
       resultNum: [0, 0, 0],
     };
@@ -135,17 +139,17 @@ export default {
   methods: {
     getOheterInfo(num) {
       let arr = [
-        ["*投诉*", "*埋怨*", "*生气*", "*建议*"],
-        ["*冲突*", "*吵架*", "*争吵*", "*骂人*", "*冲突*"],
+        ['*投诉*', '*埋怨*', '*生气*', '*建议*'],
+        ['*冲突*', '*吵架*', '*争吵*', '*骂人*', '*冲突*'],
         [
-          "*晚点*",
-          "*延误*",
-          "*停车*",
-          "*瘫痪*",
-          "*故障*",
-          "*停电*",
-          "*失火*",
-          "*淹水*",
+          '*晚点*',
+          '*延误*',
+          '*停车*',
+          '*瘫痪*',
+          '*故障*',
+          '*停电*',
+          '*失火*',
+          '*淹水*',
         ],
       ];
       let params = {
@@ -172,16 +176,17 @@ export default {
       for (let i = 0; i < arr[num].length; i++) {
         params.query.bool.should.push({
           wildcard: {
-            "text.keyword": arr[num][i],
+            'text.keyword': arr[num][i],
           },
         });
       }
       this.$axios.post(GET_WEIBO_INFO, params).then((res) => {
         this.$set(this.resultNum, num, res.data.hits.total);
+        this.isloading = false;
       });
     },
     initSwiper() {
-      this.swipier = new Swiper(".swiper-container", {
+      this.swipier = new Swiper('.swiper-container', {
         // 如果需要分页器
         on: {
           slideChangeTransitionStart: () => {
@@ -203,7 +208,7 @@ export default {
     },
     mapinit(options) {
       this.myChart = this.$echarts.init(
-        document.getElementById("mapContainer")
+        document.getElementById('mapContainer')
       );
       this.myChart.setOption(options);
       this.legendArr = options.series;
@@ -211,7 +216,7 @@ export default {
         data.selected = true;
       });
       window.addEventListener(
-        "resize",
+        'resize',
         function() {
           this.myChart.resize();
         }.bind(this)
@@ -220,7 +225,7 @@ export default {
       let index = 0; //播放所在下标
       setInterval(() => {
         this.myChart.dispatchAction({
-          type: "showTip",
+          type: 'showTip',
           seriesIndex: 0,
           dataIndex: index,
         });
@@ -289,16 +294,16 @@ export default {
       let options = {
         // backgroundColor: '#404a59',
         title: {
-          text: "地铁城市舆情数据",
+          text: '地铁城市舆情数据',
           textStyle: {
-            color: "#9BADF9",
+            color: '#9BADF9',
             fontSize: 14,
           },
         },
         tooltip: {
-          trigger: "item",
+          trigger: 'item',
           formatter: function(params) {
-            return params.name + " : " + params.value[2];
+            return params.name + ' : ' + params.value[2];
           },
         },
         legend: {
@@ -307,41 +312,41 @@ export default {
         visualMap: {
           min: 0,
           max: 200,
-          bottom: "10%",
+          bottom: '10%',
           splitNumber: 5,
           inRange: {
-            color: ["#255B78", "#2A7484", "#2F9696", "#3BBCB0", "#51D4EB"],
+            color: ['#255B78', '#2A7484', '#2F9696', '#3BBCB0', '#51D4EB'],
           },
           textStyle: {
-            color: "#fff",
+            color: '#fff',
           },
         },
         geo: {
-          map: "china",
+          map: 'china',
           label: {
             emphasis: {
               show: false,
             },
           },
           zoom: 1,
-          top: "10%",
-          left: "20%",
+          top: '10%',
+          left: '20%',
           itemStyle: {
             normal: {
-              color: "#3c4247",
+              color: '#3c4247',
               opacity: 0.6,
-              borderColor: "rgba(255, 255, 255, 0.35)",
+              borderColor: 'rgba(255, 255, 255, 0.35)',
             },
             emphasis: {
-              color: "#2a333d",
+              color: '#2a333d',
             },
           },
         },
         series: [
           {
-            name: "标签1",
-            type: "scatter",
-            coordinateSystem: "geo",
+            name: '标签1',
+            type: 'scatter',
+            coordinateSystem: 'geo',
             symbolSize: function(val) {
               return val[2] / 6 + 4;
             },
@@ -350,7 +355,7 @@ export default {
             },
             itemStyle: {
               emphasis: {
-                borderColor: "#fff",
+                borderColor: '#fff',
                 borderWidth: 1,
               },
             },
@@ -380,7 +385,7 @@ export default {
           aggs: {
             _result: {
               terms: {
-                field: "province.keyword",
+                field: 'province.keyword',
                 size: 100,
               },
             },
@@ -402,11 +407,11 @@ export default {
     },
     // 获取微博信息
     getFenxi() {
-      const container = document.getElementById("analyse");
+      const container = document.getElementById('analyse');
       const myChart = new Charts(container);
       this.$axios
         .post(POST_WEIBO_TOTAL, {
-          _source: ["wbdate", "wbtotal"],
+          _source: ['wbdate', 'wbtotal'],
           query: {
             script: {
               script: {
@@ -440,59 +445,59 @@ export default {
             valueArr.push(item.value);
           });
           const option1 = {
-            color: ["#ffffff"],
+            color: ['#ffffff'],
             title: {
-              text: "近7天舆情数据分布趋势",
+              text: '近7天舆情数据分布趋势',
               style: {
-                fill: "#9BADF9",
+                fill: '#9BADF9',
                 fontSize: 14,
-                textAlign: "center",
-                textBaseline: "bottom",
+                textAlign: 'center',
+                textBaseline: 'bottom',
               },
             },
             xAxis: {
-              name: "日期",
+              name: '日期',
               data: keyArr,
               nameTextStyle: {
-                fill: "#9BADF9",
+                fill: '#9BADF9',
                 fontSize: 14,
               },
               axisLabel: {
                 style: {
-                  fill: "#9BADF9",
+                  fill: '#9BADF9',
                   fontSize: 12,
                 },
               },
               axisLine: {
                 style: {
-                  stroke: "#979797",
+                  stroke: '#979797',
                   lineWidth: 1,
                 },
               },
             },
             yAxis: {
-              name: "(数量)",
-              data: "value",
+              name: '(数量)',
+              data: 'value',
               nameTextStyle: {
-                fill: "#9BADF9",
+                fill: '#9BADF9',
                 fontSize: 14,
               },
               splitLine: {
                 style: {
-                  stroke: "rgba(151, 151, 151, 1)",
+                  stroke: 'rgba(151, 151, 151, 1)',
                   lineWidth: 1,
                   lineDash: [8, 4],
                 },
               },
               axisLine: {
                 style: {
-                  stroke: "#979797",
+                  stroke: '#979797',
                   lineWidth: 1,
                 },
               },
               axisLabel: {
                 style: {
-                  fill: "#9BADF9",
+                  fill: '#9BADF9',
                   fontSize: 14,
                 },
               },
@@ -500,20 +505,20 @@ export default {
             series: [
               {
                 data: valueArr,
-                type: "bar",
+                type: 'bar',
                 label: {
                   show: true,
-                  position: "top",
+                  position: 'top',
                   offset: [0, -10],
                   style: {
-                    fill: "#9BADF9",
+                    fill: '#9BADF9',
                     fontSize: 14,
                   },
                 },
                 gradient: {
-                  color: ["#22BFFF", "#3F28CE"],
+                  color: ['#22BFFF', '#3F28CE'],
                 },
-                barWidth: "30%",
+                barWidth: '30%',
               },
             ],
           };
@@ -540,14 +545,14 @@ export default {
           aggs: {
             _result: {
               terms: {
-                field: "hword.keyword",
+                field: 'hword.keyword',
                 size: 100,
               },
               aggs: {
                 employed_origin: {
                   sum: {
                     script: {
-                      lang: "painless",
+                      lang: 'painless',
                       source:
                         "def lhtotal = Long.parseLong(doc['htotal.keyword'].value) ;  return lhtotal; ",
                     },
@@ -566,23 +571,23 @@ export default {
           });
           // 渲染词云
           var wc = new Js2WordCloud(
-            document.getElementById("friendsWordCloud")
+            document.getElementById('friendsWordCloud')
           ); //容器
           wc.setOption({
             tooltip: {
               show: false, // 默认：false
-              backgroundColor: "rgba(0, 0, 0, 0.701961)",
+              backgroundColor: 'rgba(0, 0, 0, 0.701961)',
               formatter: function(item) {
                 if (item[1] > 12) {
                   document.querySelector(
-                    ".__wc_tooltip__"
-                  ).style.backgroundColor = "rgba(0, 0, 0, 0.701961)";
-                  return item[0] + "：" + item[2];
+                    '.__wc_tooltip__'
+                  ).style.backgroundColor = 'rgba(0, 0, 0, 0.701961)';
+                  return item[0] + '：' + item[2];
                 } else {
                   document.querySelector(
-                    ".__wc_tooltip__"
-                  ).style.backgroundColor = "transparent";
-                  return "";
+                    '.__wc_tooltip__'
+                  ).style.backgroundColor = 'transparent';
+                  return '';
                 }
               },
             },
@@ -599,14 +604,14 @@ export default {
             color(word, weight) {
               //自定义颜色
               if (weight < 50) {
-                return "#A6A4A4";
+                return '#A6A4A4';
               } else if (weight < 100) {
-                return "#32C5FF";
+                return '#32C5FF';
               } else {
-                return "#0091FF";
+                return '#0091FF';
               }
             },
-            backgroundColor: "rgba(255, 255, 255, 0)",
+            backgroundColor: 'rgba(255, 255, 255, 0)',
           });
         });
     },
@@ -649,14 +654,14 @@ export default {
           let negativeArr = new Array(24).fill(1); // 负面数据
           let timeArr = [];
           arr = this._.sortBy(arr, function(item) {
-            return new Date(item.key.split("####")[0] + ":00");
+            return new Date(item.key.split('####')[0] + ':00');
           });
           arr.forEach((item) => {
             // 筛选满足条件的数据
-            let str2 = item.key.split(" ")[1];
+            let str2 = item.key.split(' ')[1];
             let time = parseInt(str2.slice(0, 2));
             let time2 = parseInt(
-              item.key.split(" ")[0].slice(-2) - new Date().getDate()
+              item.key.split(' ')[0].slice(-2) - new Date().getDate()
             );
             time = time + 24 * time2 - currentStart;
             let type = parseInt(str2.slice(-2));
@@ -669,7 +674,7 @@ export default {
             }
           });
 
-          console.log("24小时 舆情统计", arr, frontArr, negativeArr);
+          console.log('24小时 舆情统计', arr, frontArr, negativeArr);
           // 以当前点为最终坐标点 起始点 -24
 
           for (let j = 0; j < 24; j++) {
@@ -677,91 +682,91 @@ export default {
             currentStart++;
           }
           console.log(timeArr);
-          const container2 = document.getElementById("unmanned2");
+          const container2 = document.getElementById('unmanned2');
           const myChart2 = new Charts(container2);
           const option2 = {
             title: {
-              text: "近24小时舆情数量统计",
+              text: '近24小时舆情数量统计',
               style: {
-                fill: "#9BADF9",
+                fill: '#9BADF9',
                 fontSize: 14,
-                textAlign: "center",
-                textBaseline: "bottom",
+                textAlign: 'center',
+                textBaseline: 'bottom',
               },
             },
             legend: {
               data: [
                 {
-                  name: "正面舆情数量",
-                  color: "#aeeff0",
+                  name: '正面舆情数量',
+                  color: '#aeeff0',
                 },
                 {
-                  name: "负面舆情数量",
-                  color: "#f1829f",
+                  name: '负面舆情数量',
+                  color: '#f1829f',
                 },
               ],
               textStyle: {
-                fontFamily: "Arial",
+                fontFamily: 'Arial',
                 fontSize: 13,
-                fill: "#9BADF9",
+                fill: '#9BADF9',
               },
             },
             xAxis: {
-              name: "(小时)",
+              name: '(小时)',
               data: timeArr,
               nameTextStyle: {
-                fill: "#9BADF9",
+                fill: '#9BADF9',
                 fontSize: 14,
               },
               axisLine: {
                 style: {
-                  stroke: "#979797",
+                  stroke: '#979797',
                   lineWidth: 1,
                 },
               },
               axisLabel: {
                 style: {
-                  fill: "#9BADF9",
+                  fill: '#9BADF9',
                   fontSize: 14,
                 },
               },
 
               axisTick: {
                 style: {
-                  stroke: "#979797",
+                  stroke: '#979797',
                   lineWidth: 1,
                 },
               },
             },
             yAxis: {
-              name: "(条)",
-              data: "value",
+              name: '(条)',
+              data: 'value',
               nameTextStyle: {
-                fill: "#9BADF9",
+                fill: '#9BADF9',
                 fontSize: 14,
               },
               splitLine: {
                 style: {
-                  stroke: "rgba(151, 151, 151, 1)",
+                  stroke: 'rgba(151, 151, 151, 1)',
                   lineWidth: 1,
                   lineDash: [8, 4],
                 },
               },
               axisLine: {
                 style: {
-                  stroke: "#979797",
+                  stroke: '#979797',
                   lineWidth: 1,
                 },
               },
               axisTick: {
                 style: {
-                  stroke: "#979797",
+                  stroke: '#979797',
                   lineWidth: 1,
                 },
               },
               axisLabel: {
                 style: {
-                  fill: "#9BADF9",
+                  fill: '#9BADF9',
                   fontSize: 14,
                 },
               },
@@ -769,14 +774,14 @@ export default {
             series: [
               {
                 data: frontArr,
-                name: "正面舆情数量",
-                type: "line",
+                name: '正面舆情数量',
+                type: 'line',
                 smooth: true,
                 lineArea: {
                   show: true,
                   gradient: [
-                    "rgba(55, 162, 218, 0.6)",
-                    "rgba(55, 162, 218, 0)",
+                    'rgba(55, 162, 218, 0.6)',
+                    'rgba(55, 162, 218, 0)',
                   ],
                 },
                 lineStyle: {
@@ -786,24 +791,24 @@ export default {
               },
               {
                 data: negativeArr,
-                name: "负面舆情数量",
-                type: "line",
+                name: '负面舆情数量',
+                type: 'line',
                 smooth: true,
                 lineArea: {
                   show: true,
                   gradient: [
-                    "rgba(223, 24, 127, .6)",
-                    "rgba(223, 24, 127, .1)",
+                    'rgba(223, 24, 127, .6)',
+                    'rgba(223, 24, 127, .1)',
                   ],
                 },
                 lineStyle: {
-                  stroke: "rgba(251, 114, 147, 1)",
+                  stroke: 'rgba(251, 114, 147, 1)',
                   // lineDash: [3, 3],
                   lineWidth: 2,
                 },
                 linePoint: {
                   style: {
-                    stroke: "rgba(251, 114, 147, 1)",
+                    stroke: 'rgba(251, 114, 147, 1)',
                   },
                 },
               },
@@ -827,7 +832,7 @@ export default {
               must: [
                 {
                   term: {
-                    "weibo_type.keyword": this.keywordList[this.currentTab - 1],
+                    'weibo_type.keyword': this.keywordList[this.currentTab - 1],
                   },
                 },
               ],
@@ -840,13 +845,13 @@ export default {
                   inline:
                     "String s = doc['create_date.keyword'].value;String x= s.substring(0,10);return x",
                 },
-                type: "string",
-                order: "desc",
+                type: 'string',
+                order: 'desc',
               },
             },
             {
               weight: {
-                order: "desc",
+                order: 'desc',
               },
             },
           ],
@@ -855,7 +860,7 @@ export default {
           this.publicList = [];
           response.data.hits.hits.slice(0, 5).forEach((item) => {
             this.publicList.push({
-              text: item._source.text.slice(0, 12) + "...",
+              text: item._source.text.slice(0, 12) + '...',
               //!目前是按照权重值进行的区分
               status: item._source.weight > 20 ? 1 : 2,
               time: item._source.create_date,
@@ -875,7 +880,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../node_modules/swiper/swiper";
+@import '../../node_modules/swiper/swiper';
 .analyse-box {
   width: 100%;
   height: 22vh;
@@ -930,11 +935,11 @@ export default {
       }
     }
     li:after {
-      content: "";
+      content: '';
       display: block;
       width: 130%;
       height: 4px;
-      background: url("../assets/line.png") no-repeat;
+      background: url('../assets/line.png') no-repeat;
       background-size: 100%;
       position: absolute;
       left: -50px;
