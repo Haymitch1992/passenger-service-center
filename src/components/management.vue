@@ -4,19 +4,21 @@
     <div class="equipment">
       <div class="equipment-left">
         <p class="equipment-title">设备故障状态</p>
-        <dv-decoration-9 :dur="6" class="malfunction">66%</dv-decoration-9>
+        <dv-decoration-9 :dur="6" class="malfunction">{{
+          rate
+        }}</dv-decoration-9>
         <ul class="equipment-ul">
           <li>
             <p class="title">接入数量</p>
-            <p class="number">200</p>
+            <p class="number">{{ deviceStatus.Number }}</p>
           </li>
           <li>
             <p class="title">故障数量</p>
-            <p class="number">30</p>
+            <p class="number">{{ deviceStatus.Error }}</p>
           </li>
           <li>
             <p class="title">正常数量</p>
-            <p class="number">170</p>
+            <p class="number">{{ deviceStatus.Normal }}</p>
           </li>
         </ul>
       </div>
@@ -36,12 +38,12 @@
             :key="index"
             v-for="(item, index) in config.data"
           >
-            <span>{{ item[0] }}</span>
-            <span>{{ item[1] }}</span>
-            <span>{{ item[2] }}</span>
-            <span style="line-height: 20px;">{{ item[3] }}</span>
-            <span>{{ item[4] }}</span>
-            <span>{{ item[5] }}</span>
+            <span>{{ item.DeviceID }}</span>
+            <span>{{ item.Pos }}</span>
+            <span>{{ item.Reason }}</span>
+            <span style="line-height: 20px;">{{ item.Time }}</span>
+            <span>{{ item.FailuresNum }}</span>
+            <span>{{ item.FailuresClass }}</span>
           </li>
         </ul>
       </div>
@@ -50,12 +52,17 @@
 </template>
 
 <script>
-import Charts from '@jiaminghi/charts';
+import { GET_DEVICE_SATAUS, GET_DEVICE_MONITOR } from '../config/url';
 export default {
   name: 'management',
   data() {
     return {
       isloading: true,
+      deviceStatus: {
+        Number: 0,
+        Error: 0,
+        Normal: 0,
+      },
       currentStatus: [8, 5, 3, 60],
       equipmentData: {
         series: [
@@ -154,54 +161,33 @@ export default {
       },
     };
   },
+  computed: {
+    rate() {
+      let num = this.deviceStatus.Error / this.deviceStatus.Number;
+      num = num.toFixed(2);
+      console.log(num);
+      num = num * 100 + '%';
+      return num;
+    },
+  },
   methods: {
-    drawChart() {
-      const container = document.getElementById('gauge');
-      const myChart = new Charts(container);
-      const option1 = {
-        series: [
-          {
-            type: 'gauge',
-            startAngle: -Math.PI / 2,
-            endAngle: Math.PI * 1.5,
-            arcLineWidth: 16,
-            data: [{ value: 65, gradient: ['#03c2fd', '#1ed3e5', '#2fded6'] }],
-            axisLabel: {
-              show: false,
-            },
-            axisTick: {
-              show: false,
-              style: {
-                stroke: '#393939',
-                lineWidth: 1,
-              },
-            },
-            pointer: {
-              show: false,
-            },
-            // #393939
-            dataItemStyle: {
-              lineCap: 'round',
-            },
-            details: {
-              show: true,
-              formatter: '{value}%',
-              style: {
-                fill: '#1ed3e5',
-                fontSize: 35,
-              },
-            },
-          },
-        ],
-      };
-      myChart.setOption(option1);
+    getList() {
+      // 获取设备状态
+      this.$axios.get(GET_DEVICE_SATAUS).then((res) => {
+        console.log(res.data);
+        this.deviceStatus = res.data;
+      });
+      // 获取设备信息列表
+      this.$axios.get(GET_DEVICE_MONITOR).then((res) => {
+        console.log(res.data);
+        this.config.data = res.data;
+        this.isloading = false;
+      });
+      //
     },
   },
   mounted() {
-    setTimeout(() => {
-      this.isloading = false;
-    }, 2000);
-    // this.drawChart()
+    this.getList();
   },
 };
 </script>

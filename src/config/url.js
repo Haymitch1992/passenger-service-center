@@ -12,3 +12,8 @@ export const GET_VIDEO_LIST = "/video/api/ipss/monitor/flowinfo"
 export const GET_PERSONAL_SERVICE = "/video/api/ipss/personal_service/statics"
 // 无人客服监控
 export const GET_CUSTOMER = "/video/api/ipss/customer_service/statics"
+
+// 设备管理
+export const GET_DEVICE_SATAUS = "/video/api/ipss/device_manage/status/"
+// 设备列表
+export const GET_DEVICE_MONITOR = "/video/api/ipss/device_manage/monitor"

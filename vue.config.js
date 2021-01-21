@@ -18,13 +18,13 @@ module.exports = {
                 }
             },
             '/video': {
-                target: 'http://192.168.58.190:15000',
+                target: 'http://192.168.58.156:15000',
                 changeOrigin: true,//是否跨域
                 ws: true, // proxy websockets
                 pathRewrite: {//重写路径
                     "^/video": ''
                 }
-			}
+            }
         }
     }
 }
