@@ -20,7 +20,7 @@
                 <dv-border-box-13>
                   <div class="video">
                     <div class="video-box">
-                      <videobox></videobox>
+                      <videobox :videoIndex="index"></videobox>
                     </div>
                     <div class="video-title">
                       <span>类型：{{ item.type }}</span>
@@ -37,83 +37,29 @@
       <div class="screen-right">
         <dv-border-box-11 title="主动报警列表">
           <div class="monitoring">
-            <dv-border-box-10 class="monitoring-item">
+            <dv-border-box-10
+              class="monitoring-item"
+              v-for="(item, index) in alertList"
+              :key="index"
+            >
               <div class="monitoring-container">
                 <div class="monitoring-left">
-                  <div src="" alt="" class="monitoring-img" />
+                  <img
+                    src="../assets/alarm.jpg"
+                    alt=""
+                    class="monitoring-img"
+                  />
                 </div>
                 <div class="monitoring-right">
                   <p>
-                    报警等级：三级
-                    <span class="margin-left-text">报警内容：逃票</span>
+                    报警等级：{{ item['报警等级'] }}
+                    <span class="margin-left-text"
+                      >报警内容：{{ item['报警内容'] }}</span
+                    >
                   </p>
-                  <p>开始时间：2020年7月25日 15:00</p>
-                  <p>持续时间：100s</p>
-                  <p>发生位置：6号线呼家楼站B口</p>
-                </div>
-              </div>
-            </dv-border-box-10>
-            <dv-border-box-10 class="monitoring-item">
-              <div class="monitoring-container">
-                <div class="monitoring-left">
-                  <div src="" alt="" class="monitoring-img" />
-                </div>
-                <div class="monitoring-right">
-                  <p>
-                    报警等级：三级
-                    <span class="margin-left-text">报警内容：逃票</span>
-                  </p>
-                  <p>开始时间：2020年7月25日 15:00</p>
-                  <p>持续时间：100s</p>
-                  <p>发生位置：6号线呼家楼站B口</p>
-                </div>
-              </div>
-            </dv-border-box-10>
-            <dv-border-box-10 class="monitoring-item">
-              <div class="monitoring-container">
-                <div class="monitoring-left">
-                  <div src="" alt="" class="monitoring-img" />
-                </div>
-                <div class="monitoring-right">
-                  <p>
-                    报警等级：三级
-                    <span class="margin-left-text">报警内容：逃票</span>
-                  </p>
-                  <p>开始时间：2020年7月25日 15:00</p>
-                  <p>持续时间：100s</p>
-                  <p>发生位置：6号线呼家楼站B口</p>
-                </div>
-              </div>
-            </dv-border-box-10>
-            <dv-border-box-10 class="monitoring-item">
-              <div class="monitoring-container">
-                <div class="monitoring-left">
-                  <div src="" alt="" class="monitoring-img" />
-                </div>
-                <div class="monitoring-right">
-                  <p>
-                    报警等级：三级
-                    <span class="margin-left-text">报警内容：逃票</span>
-                  </p>
-                  <p>开始时间：2020年7月25日 15:00</p>
-                  <p>持续时间：100s</p>
-                  <p>发生位置：6号线呼家楼站B口</p>
-                </div>
-              </div>
-            </dv-border-box-10>
-            <dv-border-box-10 class="monitoring-item">
-              <div class="monitoring-container">
-                <div class="monitoring-left">
-                  <div src="" alt="" class="monitoring-img" />
-                </div>
-                <div class="monitoring-right">
-                  <p>
-                    报警等级：三级
-                    <span class="margin-left-text">报警内容：逃票</span>
-                  </p>
-                  <p>开始时间：2020年7月25日 15:00</p>
-                  <p>持续时间：100s</p>
-                  <p>发生位置：6号线呼家楼站B口</p>
+                  <p>开始时间：{{ item['开始时间'] }}</p>
+                  <p>持续时间：{{ item['持续时间'] }}s</p>
+                  <p>发生位置：{{ item['发生位置'] }}</p>
                 </div>
               </div>
             </dv-border-box-10>
@@ -125,7 +71,7 @@
 </template>
 
 <script>
-import { GET_VIDEO_LIST } from '../config/url';
+import { GET_VIDEO_LIST, GET_ALERT_LIST } from '../config/url';
 import videobox from '../components/video';
 export default {
   name: 'screen-page-3',
@@ -135,13 +81,21 @@ export default {
   data() {
     return {
       videoList: [],
+      alertList: [],
     };
   },
 
   mounted() {
     this.getVideoList();
+    this.getAlertList();
   },
   methods: {
+    getAlertList() {
+      this.$axios.get(GET_ALERT_LIST).then((res) => {
+        console.log(res.data);
+        this.alertList = res.data;
+      });
+    },
     getVideoList() {
       this.$axios.get(GET_VIDEO_LIST).then((res) => {
         console.log(res.data);

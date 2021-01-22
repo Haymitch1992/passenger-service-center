@@ -7,6 +7,8 @@ export const POST_WEIBO_HOTWORD ="/renwen/weibo_hotword/_search"
 // 
 // 获取视频流信息
 export const GET_VIDEO_LIST = "/video/api/ipss/monitor/flowinfo"
+// 主动报警列表
+export const GET_ALERT_LIST = "/video/api/ipss/monitor/recentalarm"
 
 // 个性化服务
 export const GET_PERSONAL_SERVICE = "/video/api/ipss/personal_service/statics"

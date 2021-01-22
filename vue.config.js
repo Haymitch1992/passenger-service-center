@@ -1,8 +1,8 @@
 module.exports = {
     devServer: {
         // 设置主机地址
-        host:"localhost",
-        //host:"192.168.56.75",
+        //host:"localhost",
+        host:"192.168.61.52",
         // host: '192.168.60.74',
         // 设置默认端口
         port: 8082,

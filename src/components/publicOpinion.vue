@@ -17,7 +17,7 @@
           </ul>
           <ul class="public-content">
             <li v-for="(item, index) in publicList" :key="index">
-              <p class="public-title">
+              <p class="public-title" :title="item.content">
                 <span class="public-status" :class="`s-${item.status}`"></span
                 >{{ item.text }}
               </p>
@@ -444,6 +444,9 @@ export default {
             keyArr.push(item.key);
             valueArr.push(item.value);
           });
+          // 假数据
+          valueArr = [100, 123, 300, 149, 100, 123, 300];
+          keyArr = ['1-16', '1-17', '1-18', '1-19', '1-20', '1-21', '1-22'];
           const option1 = {
             color: ['#ffffff'],
             title: {
@@ -673,7 +676,59 @@ export default {
               }
             }
           });
-
+          // 假数据
+          frontArr = [
+            233,
+            142,
+            34,
+            48,
+            22,
+            141,
+            36,
+            52,
+            233,
+            142,
+            34,
+            48,
+            22,
+            141,
+            36,
+            52,
+            233,
+            142,
+            34,
+            48,
+            22,
+            141,
+            36,
+            52,
+          ];
+          negativeArr = [
+            22,
+            141,
+            36,
+            52,
+            22,
+            44,
+            62,
+            124,
+            22,
+            141,
+            36,
+            52,
+            22,
+            44,
+            62,
+            124,
+            22,
+            141,
+            36,
+            52,
+            22,
+            44,
+            62,
+            124,
+          ];
           console.log('24小时 舆情统计', arr, frontArr, negativeArr);
           // 以当前点为最终坐标点 起始点 -24
 
@@ -860,6 +915,7 @@ export default {
           this.publicList = [];
           response.data.hits.hits.slice(0, 5).forEach((item) => {
             this.publicList.push({
+              content: item._source.text,
               text: item._source.text.slice(0, 12) + '...',
               //!目前是按照权重值进行的区分
               status: item._source.weight > 20 ? 1 : 2,

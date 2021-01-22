@@ -29,7 +29,8 @@ export default {
   padding: 20px 160px 100px;
   img {
     display: block;
-    width: 100%;
+    width: 90%;
+    margin: 0 auto;
   }
 }
 </style>
