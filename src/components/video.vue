@@ -13,6 +13,7 @@ import flv from 'flv.js';
 export default {
   props: {
     videoIndex: Number,
+    videoUrl: String,
   },
   data() {
     return {
@@ -24,7 +25,7 @@ export default {
     if (flv.isSupported()) {
       this.player = flv.createPlayer({
         type: 'flv',
-        url: 'http://172.51.215.157:8080/live/test.flv',
+        url: this.videoUrl,
       });
     }
   },

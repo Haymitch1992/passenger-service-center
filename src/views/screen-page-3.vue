@@ -1,7 +1,7 @@
 <template>
   <div class="screen">
     <div class="screen-title">
-      <span class="screen-title-time">2020年10月27日 14:41:32</span>
+      <span class="screen-title-time">2021年2月27日 14:41:32</span>
     </div>
     <div class="screen-content">
       <div class="screen-left">
@@ -20,7 +20,14 @@
                 <dv-border-box-13>
                   <div class="video">
                     <div class="video-box">
-                      <videobox :videoIndex="index"></videobox>
+                      <!-- <videobox
+                        :videoIndex="index"
+                        :videoUrl="item.flow"
+                      ></videobox> -->
+                      <dplayervideo
+                        :videoIndex="index"
+                        :videoUrl="item.flow"
+                      ></dplayervideo>
                     </div>
                     <div class="video-title">
                       <span>类型：{{ item.type }}</span>
@@ -44,11 +51,7 @@
             >
               <div class="monitoring-container">
                 <div class="monitoring-left">
-                  <img
-                    src="../assets/alarm.jpg"
-                    alt=""
-                    class="monitoring-img"
-                  />
+                  <img :src="item.image" alt="" class="monitoring-img" />
                 </div>
                 <div class="monitoring-right">
                   <p>
@@ -72,15 +75,40 @@
 
 <script>
 import { GET_VIDEO_LIST, GET_ALERT_LIST } from '../config/url';
-import videobox from '../components/video';
+import dplayervideo from '../components/dplayerVideo';
 export default {
   name: 'screen-page-3',
   components: {
-    videobox,
+    dplayervideo,
   },
   data() {
     return {
-      videoList: [],
+      videoList: [
+        {
+          type: '\u7279\u6b8a\u4eba\u7fa4\u76d1\u63a7',
+          pos: 'A\u53e3',
+          status: '\u6b63\u5e38',
+          flow: 'http://172.51.215.158:8080/live/camera1.flv',
+        },
+        {
+          type: '\u7279\u6b8a\u4eba\u7fa4\u76d1\u63a7',
+          pos: 'B\u53e3',
+          status: '\u6b63\u5e38',
+          flow: 'http://172.51.215.158:8080/live/camera2.flv',
+        },
+        {
+          type: '\u7279\u6b8a\u4eba\u7fa4\u76d1\u63a7',
+          pos: 'C\u53e3',
+          status: '\u6b63\u5e38',
+          flow: 'http://172.51.215.158:8080/live/camera3.flv',
+        },
+        {
+          type: '\u7279\u6b8a\u4eba\u7fa4\u76d1\u63a7',
+          pos: 'D\u53e3',
+          status: '\u6b63\u5e38',
+          flow: 'http://172.51.215.158:8080/live/camera4.flv',
+        },
+      ],
       alertList: [],
     };
   },
